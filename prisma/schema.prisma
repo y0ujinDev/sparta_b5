@@ -18,7 +18,7 @@ model Users {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   reviews       Reviews[]
-  restaurants   Restaurant[]
+  restaurants   Restaurant?
   order_menu    OrderMenu[]
 
   @@map("Users")
