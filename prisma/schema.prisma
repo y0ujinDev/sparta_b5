@@ -8,68 +8,69 @@ datasource db {
 }
 
 model Users {
-  id            Int         @id @default(autoincrement())
-  email         String      @unique
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
   password      String
   nickname      String
-  point         Int         @default(1000000)
-  isBoss        Boolean     @default(false) @map("is_boss")
-  emailVerified Boolean     @default(false) @map("email_verified")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  point         Int          @default(1000000)
+  isOwner       Boolean      @default(false) @map("is_owner")
+  emailVerified Boolean      @default(false) @map("email_verified")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
   reviews       Reviews[]
-  restaurants   Restaurant?
-  order_menu    OrderMenu[]
+  restaurant    Restaurants?
+  order         Orders[]
 
   @@map("Users")
 }
 
 model Reviews {
-  id           Int        @id @default(autoincrement())
-  userId       Int        @map("user_id")
-  restaurantId Int        @map("restaurant_id")
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  restaurantId Int         @map("restaurant_id")
   score        Int
   content      String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  user         Users      @relation(fields: [userId], references: [id])
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  user         Users       @relation(fields: [userId], references: [id])
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
 
   @@map("Reviews")
 }
 
-model Restaurant {
-  id        Int       @id @default(autoincrement())
-  name      String
-  address   String
-  content   String
-  menu      String
-  category  String
-  bossId    Int       @unique @map("boss_id")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  user      Users     @relation(fields: [bossId], references: [id])
-  reviews   Reviews[]
-  boss_menu Menu[]
+model Restaurants {
+  id         Int       @id @default(autoincrement())
+  name       String
+  address    String
+  content    String
+  menu       String
+  category   String
+  onwerId    Int       @unique @map("owner_id")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       Users     @relation(fields: [onwerId], references: [id])
+  reviews    Reviews[]
+  owner_menu Menus[]
 
-  @@map("Restaurant")
+  @@map("Restaurants")
 }
 
-model OrderMenu {
-  id        Int      @id @default(autoincrement())
-  name      String
-  price     Int
-  userId    Int      @map("user_id")
-  menuId    Int      @map("menu_id")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      Users    @relation(fields: [userId], references: [id])
-  boss_menu Menu     @relation(fields: [menuId], references: [id])
+model Orders {
+  id             Int      @id @default(autoincrement())
+  name           String
+  price          Int
+  deliveryStatus String   @default("ORDERED") @map("delivery_status")
+  userId         Int      @map("user_id")
+  menuId         Int      @map("menu_id")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           Users    @relation(fields: [userId], references: [id])
+  owner_menu     Menus    @relation(fields: [menuId], references: [id])
 
-  @@map("Order_menu")
+  @@map("Orders")
 }
 
-model Menu {
+model Menus {
   id           Int         @id @default(autoincrement())
   name         String
   price        Int
@@ -78,8 +79,8 @@ model Menu {
   restaurantId Int         @map("restaurant_id")
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
-  order_menu   OrderMenu[]
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  order        Orders[]
 
-  @@map("Boss_menu")
+  @@map("Owner_menu")
 }
