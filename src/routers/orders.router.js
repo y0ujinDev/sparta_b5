@@ -18,7 +18,7 @@ router.post('/', ordersController.handleCreateOrder);
 router.get('/', ordersController.handleGetAllOrders);
 // 주문 상세 조회 API
 router.get('/:orderId', ordersController.handleGetOrder);
-// 주문 수정 API
+// 배달 상태 수정 API
 router.put('/:orderId', ordersController.handleUpdateOrder);
 
 export default router;

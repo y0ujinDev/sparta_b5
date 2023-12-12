@@ -7,7 +7,6 @@ export class OrdersService {
     const order = await this.ordersRepository.createOrder({
       userId,
       menuId,
-      quantity,
     });
 
     return order;
@@ -25,8 +24,11 @@ export class OrdersService {
     return orders;
   };
 
-  updataOrder = async (orderId, quantity) => {
-    const order = await this.ordersRepository.updateOrder(orderId, quantity);
+  updataOrder = async (orderId, deliveryStatus) => {
+    const order = await this.ordersRepository.updateOrder(
+      orderId,
+      deliveryStatus,
+    );
 
     return order;
   };

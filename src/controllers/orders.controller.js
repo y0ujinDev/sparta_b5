@@ -6,13 +6,12 @@ export class OrdersController {
   }
 
   handleCreateOrder = async (req, res, next) => {
-    const { menuId, quantity } = req.body;
+    const { menuId } = req.params;
     const { userId } = req.locals.user.id;
     try {
       const order = await this.ordersService.createOrder({
         userId,
         menuId,
-        quantity,
       });
 
       return res.status(StatusCodes.CREATED).json({
@@ -53,12 +52,15 @@ export class OrdersController {
 
   handleUpdateOrder = async (req, res, next) => {
     const { orderId } = req.params;
-    const { quantity } = req.body;
+    const { deliveryStatus } = req.body;
     try {
-      const order = await this.ordersService.updateOrder(orderId, quantity);
+      const order = await this.ordersService.updateOrder(
+        orderId,
+        deliveryStatus,
+      );
 
       return res.status(StatusCodes.OK).json({
-        message: '주문 내역이 정상적으로 수정되었습니다.',
+        message: '배달 상태가 업데이트 되었습니다.',
         data: order,
       });
     } catch (err) {
