@@ -1,0 +1,5 @@
+{
+  "testPathIgnorePatterns": ["/node_modules/"],
+  "setupFiles": ["./jest.setup.js"],
+  "verbose": true
+}
