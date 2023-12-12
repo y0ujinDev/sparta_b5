@@ -16,4 +16,12 @@ export class OrdersRepository {
       },
     });
   };
+
+  findOrderById = async (orderId) => {
+    return await this.prisma.orderMenu.findUnique({
+      where: {
+        id: orderId,
+      },
+    });
+  };
 }

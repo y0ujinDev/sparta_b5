@@ -12,4 +12,10 @@ export class OrdersService {
 
     return order;
   };
+
+  getOrder = async (orderId) => {
+    const order = await this.ordersRepository.findOrderById(orderId);
+
+    return order;
+  };
 }

@@ -23,4 +23,18 @@ export class OrdersController {
       next(err);
     }
   };
+
+  handleGetOrder = async (req, res, next) => {
+    const { orderId } = req.params;
+    try {
+      const order = await this.ordersService.getOrder(orderId);
+
+      return res.status(StatusCodes.OK).json({
+        message: '상세 주문 내역을 확인하였습니다.',
+        data: order,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
