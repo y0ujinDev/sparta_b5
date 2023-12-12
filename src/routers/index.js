@@ -1,5 +1,8 @@
-import express from "express";
+import { Router } from 'express';
+import { menusRouter } from './menus.router.js';
 
-const router = express.Router();
+const router = Router();
+
+router.use('/restaurants/menus', menusRouter);
 
 export default router;
