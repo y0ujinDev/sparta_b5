@@ -1,11 +1,85 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
+  password      String
+  nickname      String
+  point         Int          @default(1000000)
+  isBoss        Boolean      @default(false) @map("is_boss")
+  emailVerified Boolean      @default(false) @map("email_verified")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  reviews       Reviews[]
+  restaurants   Restaurant[]
+  order_menu    OrderMenu[]
+
+  @@map("Users")
+}
+
+model Reviews {
+  id           Int        @id @default(autoincrement())
+  userId       Int        @map("user_id")
+  restaurantId Int        @map("restaurant_id")
+  score        Int
+  content      String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  user         Users      @relation(fields: [userId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+
+  @@map("Reviews")
+}
+
+model Restaurant {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  content   String
+  menu      String
+  category  String
+  bossId    Int       @map("boss_id")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      Users     @relation(fields: [bossId], references: [id])
+  reviews   Reviews[]
+  boss_menu Menu[]
+
+  @@map("Restaurant")
+}
+
+model OrderMenu {
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Int
+  userId    Int      @map("user_id")
+  menuId    Int      @map("menu_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      Users    @relation(fields: [userId], references: [id])
+  boss_menu Menu     @relation(fields: [menuId], references: [id])
+
+  @@map("Order_menu")
+}
+
+model Menu {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Int
+  image        String
+  content      String
+  restaurantId Int         @map("restaurant_id")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  order_menu   OrderMenu[]
+
+  @@map("Boss_menu")
 }
