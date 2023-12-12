@@ -24,4 +24,8 @@ export class OrdersRepository {
       },
     });
   };
+
+  findAllOrders = async () => {
+    return await this.prisma.orderMenu.findMany();
+  };
 }

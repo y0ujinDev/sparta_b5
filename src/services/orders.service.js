@@ -18,4 +18,10 @@ export class OrdersService {
 
     return order;
   };
+
+  getAllOrders = async () => {
+    const orders = await this.ordersRepository.findAllOrders();
+
+    return orders;
+  };
 }

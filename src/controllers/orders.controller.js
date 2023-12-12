@@ -37,4 +37,17 @@ export class OrdersController {
       next(err);
     }
   };
+
+  handleGetAllOrders = async (req, res, next) => {
+    try {
+      const orders = await this.ordersService.getAllOrders();
+
+      return res.status(StatusCodes.OK).json({
+        message: '전체 주문 내역을 확인하였습니다.',
+        data: orders,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
