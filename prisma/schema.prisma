@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Users {
-  id            Int          @id @default(autoincrement())
-  email         String       @unique
+  id            Int         @id @default(autoincrement())
+  email         String      @unique
   password      String
   nickname      String
-  point         Int          @default(1000000)
-  isBoss        Boolean      @default(false) @map("is_boss")
-  emailVerified Boolean      @default(false) @map("email_verified")
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  point         Int         @default(1000000)
+  isBoss        Boolean     @default(false) @map("is_boss")
+  emailVerified Boolean     @default(false) @map("email_verified")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   reviews       Reviews[]
   restaurants   Restaurant?
   order_menu    OrderMenu[]
@@ -45,7 +45,7 @@ model Restaurant {
   content   String
   menu      String
   category  String
-  bossId    Int       @map("boss_id")
+  bossId    Int       @unique @map("boss_id")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   user      Users     @relation(fields: [bossId], references: [id])
