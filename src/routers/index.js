@@ -1,8 +1,8 @@
 import express from 'express';
-import OrderRouter from './orders.router.js';
+import OrdersRouter from './orders.router.js';
 
 const router = express.Router();
 
-router.use('/orders', OrderRouter);
+router.use('/orders', OrdersRouter);
 
 export default router;
