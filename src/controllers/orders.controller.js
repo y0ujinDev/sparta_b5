@@ -1,4 +1,4 @@
-import { StatusCodes } from './../utils/constants/constants';
+import { StatusCodes } from '../utils/constants/constants.js';
 
 export class OrdersController {
   constructor(ordersService) {

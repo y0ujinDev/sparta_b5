@@ -17,9 +17,9 @@ model Users {
   emailVerified Boolean      @default(false) @map("email_verified")
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  reviews       Reviews[]
-  restaurant    Restaurants?
   order         Orders[]
+  restaurant    Restaurants?
+  reviews       Reviews[]
 
   @@map("Users")
 }
@@ -32,9 +32,11 @@ model Reviews {
   content      String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  user         Users       @relation(fields: [userId], references: [id])
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  user         Users       @relation(fields: [userId], references: [id])
 
+  @@index([restaurantId], map: "Reviews_restaurant_id_fkey")
+  @@index([userId], map: "Reviews_user_id_fkey")
   @@map("Reviews")
 }
 
@@ -48,9 +50,9 @@ model Restaurants {
   onwerId    Int       @unique @map("owner_id")
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+  owner_menu Menus[]
   user       Users     @relation(fields: [onwerId], references: [id])
   reviews    Reviews[]
-  owner_menu Menus[]
 
   @@map("Restaurants")
 }
@@ -64,9 +66,11 @@ model Orders {
   menuId         Int      @map("menu_id")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  user           Users    @relation(fields: [userId], references: [id])
   owner_menu     Menus    @relation(fields: [menuId], references: [id])
+  user           Users    @relation(fields: [userId], references: [id])
 
+  @@index([menuId], map: "Orders_menu_id_fkey")
+  @@index([userId], map: "Orders_user_id_fkey")
   @@map("Orders")
 }
 
@@ -79,8 +83,9 @@ model Menus {
   restaurantId Int         @map("restaurant_id")
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
   order        Orders[]
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
 
+  @@index([restaurantId], map: "Owner_menu_restaurant_id_fkey")
   @@map("Owner_menu")
 }
