@@ -24,4 +24,10 @@ export class OrdersService {
 
     return orders;
   };
+
+  updataOrder = async (orderId, quantity) => {
+    const order = await this.ordersRepository.updateOrder(orderId, quantity);
+
+    return order;
+  };
 }

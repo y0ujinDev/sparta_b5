@@ -28,4 +28,15 @@ export class OrdersRepository {
   findAllOrders = async () => {
     return await this.prisma.orderMenu.findMany();
   };
+
+  updateOrder = async (orderId, quantity) => {
+    return await this.prisma.orderMenu.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        quantity,
+      },
+    });
+  };
 }

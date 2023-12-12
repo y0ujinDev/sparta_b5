@@ -50,4 +50,19 @@ export class OrdersController {
       next(err);
     }
   };
+
+  handleUpdateOrder = async (req, res, next) => {
+    const { orderId } = req.params;
+    const { quantity } = req.body;
+    try {
+      const order = await this.ordersService.updateOrder(orderId, quantity);
+
+      return res.status(StatusCodes.OK).json({
+        message: '주문 내역이 정상적으로 수정되었습니다.',
+        data: order,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
