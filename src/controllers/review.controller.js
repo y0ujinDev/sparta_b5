@@ -14,12 +14,12 @@ export class ReviewsController {
   };
 
   // 리뷰 생성
-  createReviews = async (req, res, next) => {
+  createReview = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
       const { score, content } = req.body;
 
-      const createReviews = await this.reviewsService.createReviews(
+      const createReviews = await this.reviewsService.createReview(
         userId,
         score,
         content,
@@ -41,13 +41,15 @@ export class ReviewsController {
     }
   };
   // 리뷰수정
-  updateReviews = async (req, res, next) => {
+  updateReview = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
+      const { reviewId } = req.params;
       const { score, content } = req.body;
 
-      const updateReviews = await this.reviewsService.updateReviews(
+      const updateReviews = await this.reviewsService.updateReview(
         userId,
+        reviewId,
         score,
         content,
       );
@@ -58,11 +60,11 @@ export class ReviewsController {
     }
   };
   // 리뷰삭제
-  deleteReviews = async (req, res, next) => {
+  deleteReview = async (req, res, next) => {
     try {
       const { reviewId } = req.params;
       const { userId } = res.locals.user;
-      const deleteReviews = await this.reviewsService.deleteReviews(
+      const deleteReviews = await this.reviewsService.deleteReview(
         reviewId,
         userId,
       );
