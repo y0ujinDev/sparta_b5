@@ -1,12 +1,12 @@
-import { MenusRepository } from '../repositories/menus.repository.js'
+import { RestaurantMenusRepository } from '../repositories/restaurantMenus.repository.js'
 
-export class MenusService{
+export class RestaurantMenusService {
     constructor() {
-        this.menusRepository = new MenusRepository();
+        this.restaurantMenusRepository = new RestaurantMenusRepository();
     }
 
     createOne = async({name, price, image, content }) => {
-const menu = await this.menusRepository.createOne({
+const menu = await this.restaurantMenusRepository.createOne({
     name, price, image, content
 })
 
@@ -15,7 +15,7 @@ return { ... menu}
     }
 
     readMany = async ({ sort }) => {
-        const menus = await this.menusRepository.readMany({ sort });
+        const menus = await this.restaurantMenusRepository.readMany({ sort });
     
         return menus;
       };
@@ -32,7 +32,7 @@ return { ... menu}
         //   throw new HttpStatus.Forbidden('상품 수정 권한이 없습니다.');
         // }
     
-        const updatedMenu = await this.menusRepository.updateOneById(id, {
+        const updatedMenu = await this.restaurantMenusRepository.updateOneById(id, {
             name, price, image, content
         });
     
@@ -51,7 +51,7 @@ return { ... menu}
         //   throw new HttpStatus.Forbidden('상품 삭제 권한이 없습니다.');
         // }
     
-        const deletedMenu = await this.menusRepository.deleteOneById(id);
+        const deletedMenu = await this.restaurantMenusRepository.deleteOneById(id);
     
         return { ...deletedMenu };
       };

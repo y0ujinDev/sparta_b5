@@ -1,8 +1,8 @@
-import { MenusService } from '../services/menus.service.js';
+import { RestaurantMenusService } from '../services/restaurantMenus.service.js';
 
-export class MenusController {
+export class RestaurantMenusController {
   constructor() {
-    this.menusService = new MenusService();
+    this.restaurantMenusService = new RestaurantMenusService();
   }
 
   //메뉴 생성
@@ -39,7 +39,7 @@ export class MenusController {
         });
       }
 
-      const data = await this.menusService.createOne({
+      const data = await this.restaurantMenusService.createOne({
         name,
         price,
         image,
@@ -68,14 +68,15 @@ readMany = async (req, res, next) => {
         upperCaseSort = 'DESC';
       }
 
-      const data = await this.menusService.readMany({
+      const data = await this.restaurantMenusService.readMany({
         sort: upperCaseSort,
       });
-
+      console.log('data',data)
       return res.status(200).json({
         success: true,
         message: '메뉴 조회에 성공했습니다.',
         data,
+        
       });
     } catch (error) {
       next(error);
@@ -98,7 +99,7 @@ readMany = async (req, res, next) => {
       }
 
     
-      const data = await this.productsService.updateOne({
+      const data = await this.restaurantMenusService.updateOne({
         // userId,
         // userName,
         name, price, image, content,
@@ -108,7 +109,7 @@ readMany = async (req, res, next) => {
 
       return res.status(200).json({
         success: true,
-        message: '상품 수정에 성공했습니다.',
+        message: '메뉴 수정에 성공했습니다.',
         data,
       });
     } catch (error) {
@@ -121,7 +122,7 @@ readMany = async (req, res, next) => {
       const { menuId } = req.params;
     //   const { id: userId, name: userName } = res.locals.user;
 
-      const data = await this.productsService.deleteOne({
+      const data = await this.restaurantMenusService.deleteOne({
         // userId,
         // userName,
         id: +menuId,
@@ -129,7 +130,7 @@ readMany = async (req, res, next) => {
 
       return res.status(200).json({
         success: true,
-        message: '상품 삭제에 성공했습니다.',
+        message: '메뉴 삭제에 성공했습니다.',
         data,
       });
     } catch (error) {

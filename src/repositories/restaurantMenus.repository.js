@@ -1,8 +1,8 @@
 import { prisma} from '../utils/prisma/index.js'
 
-export class MenusRepository{
+export class RestaurantMenusRepository{
 createOne = async ({ name, price, image, content }) => {
-    const menu = await prisma.menu.create({
+    const menu = await prisma.menus.create({
         data:{
             name, price, image, content
         }
@@ -12,7 +12,7 @@ createOne = async ({ name, price, image, content }) => {
 
 
 readMany = async ({ sort }) => {
-    const menus = await prisma.menu.findMany({
+    const menus = await prisma.menus.findMany({
       include: {
         restaurant: {
           select: {
@@ -29,13 +29,13 @@ readMany = async ({ sort }) => {
 
 
 updateOneById = async (id, { name, price, image, content }) => {
-    const menu = await prisma.menu.findUnique({ where: { id } });
+    const menu = await prisma.menus.findUnique({ where: { id } });
 
     if (!menu) {
       throw new HttpStatus.NotFound('메뉴 조회에 실패했습니다.');
     }
 
-    const updatedMenu = await prisma.menu.update({
+    const updatedMenu = await prisma.menus.update({
       where: { id },
       data: {
         ...(name && { name }),
@@ -49,13 +49,13 @@ updateOneById = async (id, { name, price, image, content }) => {
   };
 
   deleteOneById = async (id) => {
-    const menu = await prisma.menu.findUnique({ where: { id } });
+    const menu = await prisma.menus.findUnique({ where: { id } });
 
     if (!menu) {
       throw new HttpStatus.NotFound('메뉴 조회에 실패했습니다.');
     }
 
-    const deletedMenu = await prisma.menu.delete({ where: { id } });
+    const deletedMenu = await prisma.menus.delete({ where: { id } });
 
     return deletedMenu;
   };
