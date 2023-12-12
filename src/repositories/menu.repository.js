@@ -4,7 +4,7 @@ export class MenuRepository {
   }
 
   findMenuById = async (menuId) => {
-    return await this.prisma.menu.findUnique({
+    return await this.prisma.menus.findUnique({
       where: {
         id: menuId,
       },
