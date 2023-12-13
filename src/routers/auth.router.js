@@ -8,6 +8,6 @@ const authController = new AuthController();
 /** 회원가입 API **/
 router.post('/signup', authController.signUp);
 
-/** 회원가입 API **/
+/** 이메일 인증 링크 클릭시 API **/
 router.get('/verifyemail', authController.verifyEmailByToken);
 export default router;

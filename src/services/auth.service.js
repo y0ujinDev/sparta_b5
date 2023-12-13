@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 
+//암호화 정보
 const algorithm = process.env.MAIL_VERIFY_ALGORITHM;
 const key = crypto.scryptSync(
   process.env.MAIL_VERIFY_PASSWORD,
