@@ -5,7 +5,7 @@ const router = express.Router();
 
 const reviewsController = new ReviewsController();
 
-// /restaurants/:restaurantId 공통부분
+// /orders/:orderId/reviews 공통부분
 
 // 전체 리뷰 조회
 router.get(
@@ -15,23 +15,17 @@ router.get(
 
 // 로그인 미들웨어추가
 //리뷰생성
-router.post(
-  '/restaurants/:restaurantId/reviews',
-  reviewsController.createReviews,
-);
+router.post('/orders/:orderId/reviews', reviewsController.createReview);
 // 내 리뷰조회
-router.get(
-  '/restaurants/:restaurantId/reviews/me',
-  reviewsController.getAllMyReviews,
-);
+router.get('/orders/:orderId/reviews/me', reviewsController.getAllMyReviews);
 // 리뷰수정
 router.put(
-  '/restaurants/:restaurantId/reviews/:reviewId',
-  reviewsController.updateReviews,
+  '/orders/:orderId/reviews/:reviewId',
+  reviewsController.updateReview,
 );
 // 리뷰삭제
 router.patch(
-  '/restaurants/:restaurantId/reviews/:reviewId',
-  reviewsController.deleteReviews,
+  '/orders/:orderId/reviews/:reviewId',
+  reviewsController.deleteReview,
 );
 export default router;
