@@ -1,10 +1,5 @@
 import { prisma } from '../utils/prisma/index.js';
-export class ReviewsRepository {
-  // 전체 리뷰 조회 // include
-  findAllReviews = async () => {
-    const reviews = await prisma.reviews.findMany();
-    return reviews;
-  };
+export class UserReviewsRepository {
   // 리뷰 생성
   createReview = async (userId, score, content) => {
     const createdReview = await prisma.reviews.create({

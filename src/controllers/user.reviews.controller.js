@@ -1,25 +1,16 @@
-import { ReviewsService } from '../services/reviews.services.js';
-export class ReviewsController {
-  reviewsService = ReviewsService();
-
-  // 전체 리뷰 조회
-  getAllReviews = async (req, res, next) => {
-    try {
-      const reviews = await this.reviewsService.findAllReviews();
-
-      return res.status(200).json({ data: reviews });
-    } catch (err) {
-      next(err);
-    }
-  };
+import { UserReviewsService } from '../services/user.reviews.services.js';
+export class UserReviewsController {
+  userReviewsService = new UserReviewsService();
 
   // 리뷰 생성
   createReview = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      // const { userId } = res.locals.user;
+      // 작동확인을 위해 req.body에 넣음
+      const { userId } = req.body;
       const { score, content } = req.body;
 
-      const createReviews = await this.reviewsService.createReview(
+      const createReviews = await this.userReviewsService.createReview(
         userId,
         score,
         content,
@@ -32,8 +23,10 @@ export class ReviewsController {
   // 내 리뷰조회
   getAllMyReviews = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
-      const reviews = await this.reviewsService.findAllMyReviews(userId);
+      // const { userId } = res.locals.user;
+      // 작동확인을 위해 req.body에 넣음
+      const { userId } = req.body;
+      const reviews = await this.userReviewsService.findAllMyReviews(userId);
 
       return res.status(200).json({ data: reviews });
     } catch (err) {
@@ -43,11 +36,13 @@ export class ReviewsController {
   // 리뷰수정
   updateReview = async (req, res, next) => {
     try {
-      const { userId } = res.locals.user;
+      // const { userId } = res.locals.user;
+      // 작동확인을 위해 req.body에 넣음
+      const { userId } = req.body;
       const { reviewId } = req.params;
       const { score, content } = req.body;
 
-      const updateReviews = await this.reviewsService.updateReview(
+      const updateReviews = await this.userReviewsService.updateReview(
         userId,
         reviewId,
         score,
@@ -63,8 +58,10 @@ export class ReviewsController {
   deleteReview = async (req, res, next) => {
     try {
       const { reviewId } = req.params;
-      const { userId } = res.locals.user;
-      const deleteReviews = await this.reviewsService.deleteReview(
+      // const { userId } = res.locals.user;
+      // 작동확인을 위해 req.body에 넣음
+      const { userId } = req.body;
+      const deleteReviews = await this.userReviewsService.deleteReview(
         reviewId,
         userId,
       );
