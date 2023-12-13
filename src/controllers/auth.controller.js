@@ -56,7 +56,18 @@ export class AuthController {
           message: ErrorMessages.ALREADY_REGISTERED,
         });
       }
-      return res.status(201).json({ message: '회원가입이 완료되었습니다.' });
+      const verifyEmail = await this.authService.verifyEmail(email);
+      if (verifyEmail == 'fail') {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: '인증메일 전송에 실패하였습니다. 메일을 다시 확인해주세요.',
+        });
+      }
+      if (verifyEmail == 'success') {
+        return res.status(StatusCodes.CREATED).json({
+          message:
+            '인증메일이 발송되었습니다. 로그인을 위해 인증을 완료해주세요.',
+        });
+      }
     } catch (err) {
       next(err);
     }
