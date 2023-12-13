@@ -36,6 +36,8 @@ export class RestaurantMenusController {
         price,
         image,
         content,
+        userName:"dddd",
+        restaurantId:23
         // userId,
         // userName,
       });
@@ -91,7 +93,7 @@ readMany = async (req, res, next) => {
       const data = await this.restaurantMenusService.updateOne({
         // userId,
         // userName,
-        name, price, image, content,
+        name, price:+price, image, content,
         id: +menuId,
  
       });
