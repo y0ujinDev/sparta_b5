@@ -1,10 +1,11 @@
 import { prisma} from '../utils/prisma/index.js'
 
+
 export class RestaurantMenusRepository{
 createOne = async ({ name, price, image, content }) => {
     const menu = await prisma.menus.create({
         data:{
-            name, price, image, content
+            name, price, image, content,
         }
     })
     return menu

@@ -1,4 +1,8 @@
 import { RestaurantMenusService } from '../services/restaurantMenus.service.js';
+import {
+  ErrorMessages,
+  StatusCodes
+} from "../utils/constants/constants.js";
 
 export class RestaurantMenusController {
   constructor() {
@@ -12,31 +16,19 @@ export class RestaurantMenusController {
       const { name, price, image, content } = req.body;
 
       if (!name) {
-        return res.status(400).json({
-          success: false,
-          message: '메뉴 이름 입력이 필요합니다.',
-        });
+        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_NAME)
       }
 
       if (!price) {
-        return res.status(400).json({
-          success: false,
-          message: '메뉴 가격 입력이 필요합니다.',
-        });
+        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_PRICE)
       }
 
       if (!image) {
-        return res.status(400).json({
-          success: false,
-          message: '메뉴 이미지 입력이 필요합니다.',
-        });
+        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_IMAGE)
       }
 
       if (!content) {
-        return res.status(400).json({
-          success: false,
-          message: '설명 입력이 필요합니다.',
-        });
+        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_CONTENT)
       }
 
       const data = await this.restaurantMenusService.createOne({
@@ -48,7 +40,7 @@ export class RestaurantMenusController {
         // userName,
       });
 
-      return res.status(201).json({
+      return res.status(StatusCodes.CREATED).json({
         success: true,
         message: '메뉴 생성에 성공했습니다.',
         data,
@@ -72,7 +64,7 @@ readMany = async (req, res, next) => {
         sort: upperCaseSort,
       });
       console.log('data',data)
-      return res.status(200).json({
+      return res.status(StatusCodes.OK).json({
         success: true,
         message: '메뉴 조회에 성공했습니다.',
         data,
@@ -92,10 +84,7 @@ readMany = async (req, res, next) => {
 
       // 수정 정보가 하나도 없는 경우
       if ( !name && !price && !image && !content ) {
-        return res.status(400).json({
-          success: false,
-          message: '수정 정보는 최소 한 가지 이상이어야 합니다.',
-        });
+        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_UPDATED_INFO)
       }
 
     
@@ -107,7 +96,7 @@ readMany = async (req, res, next) => {
  
       });
 
-      return res.status(200).json({
+      return res.status(StatusCodes.OK).json({
         success: true,
         message: '메뉴 수정에 성공했습니다.',
         data,
@@ -128,7 +117,7 @@ readMany = async (req, res, next) => {
         id: +menuId,
       });
 
-      return res.status(200).json({
+      return res.status(StatusCodes.OK).json({
         success: true,
         message: '메뉴 삭제에 성공했습니다.',
         data,

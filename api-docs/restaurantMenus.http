@@ -23,11 +23,11 @@ GET {{host}}
 ### 메뉴 수정 --개발완료
 PUT {{host}}/1
 Content-Type: application/json
-Authorization: Bearer {{accessToken}}
+# Authorization: Bearer {{accessToken}}
 
 {
     "name":"마라샹궈",
-    "price": 25000,
+    "price": 250300,
     "image": "sdfasjhfdfkjlsjkf",
     "content": "“둘이먹으면 사장님이 죽음"
 }
@@ -35,4 +35,4 @@ Authorization: Bearer {{accessToken}}
 ### 메뉴 삭제 -- 개발완료
 DELETE {{host}}/1
 Content-Type: application/json
-Authorization: Bearer {{accessToken}}
+# Authorization: Bearer {{accessToken}}
