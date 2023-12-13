@@ -4,7 +4,14 @@ import 'dotenv/config';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
-// import { smtpTransport } from '../utils/config/verifyEmail.js';
+
+const algorithm = process.env.MAIL_VERIFY_ALGORITHM;
+const key = crypto.scryptSync(
+  process.env.MAIL_VERIFY_PASSWORD,
+  process.env.MAIL_VERIFY_SALT,
+  32,
+);
+const iv = crypto.randomBytes(16);
 
 export class AuthService {
   usersRepository = new UsersRepository();
@@ -20,9 +27,10 @@ export class AuthService {
   };
 
   //인증 메일 보내기
-  verifyEmail = async (email) => {
-    //토큰 발급 코드
-    const token = crypto.randomBytes(20).toString('hex');
+  sendVerifyEmail = async (email) => {
+    const cipher = crypto.createCipheriv(algorithm, key, iv);
+    let token = cipher.update(email, 'utf8', 'hex');
+    token += cipher.final('hex');
     console.log(token);
 
     const OAuth2 = google.auth.OAuth2;
@@ -58,16 +66,20 @@ export class AuthService {
       html: `인증링크 : <a href="http://localhost:3000/api/verifyemail/?token=${token}">여기를 눌러주세요</a>`,
     };
 
-    smtpTransport.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-        smtpTransport.close();
-        return 'fail';
-      } else {
-        console.log('Email sent: ' + info.response);
-        smtpTransport.close();
-        return 'success';
-      }
+    smtpTransport.sendMail(mailOptions, (error, response) => {
+      error ? console.log(error) : console.log(response);
+      smtpTransport.close();
     });
+  };
+
+  //인증 메일 검증
+  verifyEmailByToken = async (url) => {
+    const urlParam = url.substr(20);
+    const deciper = crypto.createDecipheriv(algorithm, key, iv);
+    let email = deciper.update(urlParam, 'hex', 'utf8');
+    email += deciper.final('utf8');
+    console.log(email);
+    await this.usersRepository.verifiedUser(email);
+    return;
   };
 }

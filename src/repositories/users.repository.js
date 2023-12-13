@@ -8,6 +8,16 @@ export class UsersRepository {
     });
   };
 
+  //이메일 인증 시 인증 회원으로 변경
+  verifiedUser = async (email) => {
+    await prisma.users.update({
+      where: { email },
+      data: {
+        emailVerified: true,
+      },
+    });
+  };
+
   //이메일로 회원 조회
   FindUserbyEmail = async (email) => {
     const exituser = await prisma.users.findFirst({
