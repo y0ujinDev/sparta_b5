@@ -6,15 +6,20 @@ export class UserReviewsController {
   createReview = async (req, res, next) => {
     try {
       // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
-      const { score, content } = req.body;
+      // 최신 dev시 변경할 것 restaurantI를 orderId로!
+      // 작동확인을 위해 orderId를 restaurantId로 변경함.
+      // const { orderId } = req.params;
+      const { restaurantId } = req.params;
+      const { reviewId, score, content } = req.body;
 
-      const createReviews = await this.userReviewsService.createReview(
-        userId,
+      const createReviews = await this.userReviewsService.createReview({
+        userId: +1,
+        restaurantId,
+        // orderId,
+        reviewId,
         score,
         content,
-      );
+      });
       return res.status(200).send({ data: createReviews });
     } catch (err) {
       next(err);
@@ -26,7 +31,9 @@ export class UserReviewsController {
       // const { userId } = res.locals.user;
       // 작동확인을 위해 req.body에 넣음
       const { userId } = req.body;
-      const reviews = await this.userReviewsService.findAllMyReviews(userId);
+      const reviews = await this.userReviewsService.findAllMyReviewsByuserId(
+        userId,
+      );
 
       return res.status(200).json({ data: reviews });
     } catch (err) {

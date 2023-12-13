@@ -1,26 +1,37 @@
 import { prisma } from '../utils/prisma/index.js';
 export class UserReviewsRepository {
   // 리뷰 생성
-  createReview = async (userId, score, content) => {
+  createReview = async ({
+    userId,
+    restaurantId,
+    // orderId,
+    reviewId,
+    score,
+    content,
+  }) => {
     const createdReview = await prisma.reviews.create({
       data: {
         userId,
-        score,
+        restaurantId: +restaurantId,
+        // orderId,
+        reviewId,
+        score: +score,
         content,
       },
     });
+    return createdReview;
   };
   // 내 리뷰조회
-  findAllMyReviews = async (userId) => {
-    const foundAllMyReviews = await prisma.reviews.findMany({
+  findAllMyReviewsByuserId = async (userId) => {
+    const foundAllMyReviewsByuserId = await prisma.reviews.findFirst({
       where: { userId: +userId },
     });
-    return foundAllMyReviews;
+    return foundAllMyReviewsByuserId;
   };
   // ReviewId로 review 찾기
   findByReviewId = async (reviewId) => {
     const review = await prisma.reviews.findUnique({
-      where: { reviewId: +reviewId },
+      where: { id: +reviewId },
     });
     return review;
   };
@@ -28,12 +39,12 @@ export class UserReviewsRepository {
   updateReview = async (userId, reviewId, score, content) => {
     const updatedReview = await prisma.reviews.update({
       where: {
-        reviewId: +reviewId,
+        id: +reviewId,
         userId,
       },
       data: {
         content,
-        score,
+        score: +score,
       },
     });
     return updatedReview;
@@ -42,7 +53,7 @@ export class UserReviewsRepository {
   deleteReview = async (reviewId, userId) => {
     const deletedReview = await prisma.reviews.delete({
       where: {
-        reviewId: +reviewId,
+        id: +reviewId,
         userId,
       },
     });

@@ -3,19 +3,36 @@ export class UserReviewsService {
   userReviewsRepository = new UserReviewsRepository();
 
   // 리뷰 생성
-  createReview = async (userId, score, content) => {
-    const createdReview = await this.userReviewsRepository.createReview(
+  createReview = async ({
+    userId,
+    restaurantId,
+    // orderId,
+    reviewId,
+    score,
+    content,
+  }) => {
+    const createdReview = await this.userReviewsRepository.createReview({
       userId,
+      restaurantId,
+      // orderId,
+      reviewId,
       score,
       content,
-    );
+    });
 
-    return { score: createdReview.score, content: createdReview.content };
+    return {
+      reviewId: createdReview.reviewId,
+      score: createdReview.score,
+      content: createdReview.content,
+    };
   };
   // 내 리뷰조회
-  findAllMyReviews = async (userId) => {
-    const reviews = await this.userReviewsRepository.findAllMyReviews(userId);
+  findAllMyReviewsByuserId = async (userId) => {
+    const reviews = await this.userReviewsRepository.findAllMyReviewsByuserId(
+      userId,
+    );
     return {
+      // userId: reviews.userId,
       content: reviews.content,
       score: reviews.score,
       createdAt: reviews.createdAt,

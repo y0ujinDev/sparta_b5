@@ -1,5 +1,5 @@
 import { RestaurantReviewsRepository } from '../repositories/restaurant.reviews.repository.js';
-export class RestaurantRevieService {
+export class RestaurantReviewsService {
   restaurantReviewsRepository = new RestaurantReviewsRepository();
   // 전체 리뷰 조회
   findAllReviews = async () => {
