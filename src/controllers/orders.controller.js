@@ -6,12 +6,12 @@ export class OrdersController {
   }
 
   handleCreateOrder = async (req, res, next) => {
-    const { menuId } = req.params;
+    const { restaurantId } = req.params;
     const { userId } = req.locals.user.id;
     try {
       const order = await this.ordersService.createOrder({
         userId,
-        menuId,
+        restaurantId,
       });
 
       return res.status(StatusCodes.CREATED).json({

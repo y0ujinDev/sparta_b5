@@ -3,10 +3,10 @@ export class OrdersService {
     this.ordersRepository = ordersRepository;
   }
 
-  createOrder = async ({ userId, menuId, quantity }) => {
+  createOrder = async ({ userId, restaurantId }) => {
     const order = await this.ordersRepository.createOrder({
       userId,
-      menuId,
+      restaurantId,
     });
 
     return order;
