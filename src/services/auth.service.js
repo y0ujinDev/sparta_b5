@@ -104,7 +104,7 @@ export class AuthService {
     }
 
     //사용자의 userId를 바탕으로 토큰 생성 (로그인 성공)
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
     return token;
