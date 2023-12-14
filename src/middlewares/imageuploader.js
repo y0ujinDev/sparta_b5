@@ -2,7 +2,7 @@ import aws from 'aws-sdk';
 import multer from 'multer';
 import multerS3 from 'multer-s3';
 import dotenv from 'dotenv';
-import path from 'path';
+import crypto from 'crypto'
 
 
 dotenv.config();
@@ -39,7 +39,11 @@ const upload = multer({
         bucket: 'sssclass-menu-image', // 여기에 자신의 S3 버킷 이름을 넣어주세요.
         acl: 'public-read',
         key: (req, file, cb) => {
-            cb(null, `product_image/${Date.now()}_${file.originalname}`);
+            console.log('file',file)
+            let uuid = crypto.randomUUID();
+            const extArray = file.originalname.split('.');
+            const ext = extArray[extArray.length - 1].toLowerCase();
+            cb(null, `product_image/${uuid}.${ext}`);
         },
     }),
 });

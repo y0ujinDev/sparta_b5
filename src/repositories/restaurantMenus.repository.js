@@ -1,14 +1,19 @@
 import { prisma} from '../utils/prisma/index.js'
-
+import 'dotenv/config';
+const {S3_BASE_URL} = process.env
 
 export class RestaurantMenusRepository{
+
+  
 createOne = async ({  restaurantId, name, price, image, content }) => {
     const menu = await prisma.menus.create({
         data:{
           restaurantId,name, price, image, content,
         }
+      
     })
-    return menu
+    return {...menu,image:S3_BASE_URL+'/'+menu.image}
+
 }
 
 
@@ -25,7 +30,14 @@ readMany = async ({ sort }) => {
         createdAt: sort.toLowerCase(),
       },
     });
-    return menus
+
+    const menusWithImages = menus.map(menu => ({
+      ...menu,
+      image: `${S3_BASE_URL}/${menu.image}`, // 이미지 URL 조합
+  }));
+
+  return menusWithImages;
+   
 }
 
 
@@ -47,14 +59,16 @@ updateOneById = async (id, { name, price, image, content }) => {
       },
     });
 
-    return updatedMenu;
+    return { ...updatedMenu,image:S3_BASE_URL+'/'+updatedMenu.image };
+    // return {...menu,image:S3_BASE_URL+'/'+menu.image}
+
   };
 
   deleteOneById = async (id) => {
     const menu = await prisma.menus.findUnique({ where: { id } });
 
     if (!menu) {
-      throw new HttpStatus.NotFound('메뉴 조회에 실패했습니다.');
+      throw new new Error('메뉴 조회에 실패했습니다.');
     }
 
     const deletedMenu = await prisma.menus.delete({ where: { id } });

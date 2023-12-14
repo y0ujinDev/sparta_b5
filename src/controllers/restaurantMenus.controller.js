@@ -13,7 +13,9 @@ export class RestaurantMenusController {
   createOne = async (req, res, next) => {
     try {
     //   const { id: userId, name: userName } = res.locals.user;
-      const { name, price, image, content } = req.body;
+    
+      const { name, price, content } = req.body;
+      const { key:image } = req.file
 
       if (!name) {
         return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_NAME)
@@ -33,11 +35,11 @@ export class RestaurantMenusController {
 
       const data = await this.restaurantMenusService.createOne({
         name,
-        price,
-        image,
+        price:+price,
         content,
         userName:"dddd",
-        restaurantId:23
+        restaurantId:23,
+        image
         // userId,
         // userName,
       });
@@ -81,7 +83,8 @@ readMany = async (req, res, next) => {
   updateOne = async (req, res, next) => {
     try {
       const { menuId } = req.params;
-      const { name, price, image, content } = req.body;
+      const { key:image } = req.file
+      const { name, price, content } = req.body;
     //   const { id: userId, name: userName } = res.locals.user;
 
       // 수정 정보가 하나도 없는 경우
