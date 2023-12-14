@@ -27,7 +27,7 @@ model Users {
 
 model Reviews {
   id           Int         @id @default(autoincrement())
-  userId       Int         @map("user_id")
+  userId       Int         @map("userId")
   orderId      Int         @unique @map("order_id")
   restaurantId Int         @map("restaurant_id")
   score        Int

@@ -9,7 +9,7 @@ export class OrdersRepository {
   insertOrder = async ({ userId, menuId }) => {
     const menu = await this.menuRepository.findMenuById(menuId);
 
-    return await this.prisma.order.create({
+    return await this.prisma.orders.create({
       data: {
         userId,
         menuId,
@@ -19,7 +19,7 @@ export class OrdersRepository {
   };
 
   findOrderById = async (orderId) => {
-    return await this.prisma.order.findUnique({
+    return await this.prisma.orders.findUnique({
       where: {
         id: orderId,
       },
@@ -27,11 +27,11 @@ export class OrdersRepository {
   };
 
   findAllOrders = async () => {
-    return await this.prisma.order.findMany();
+    return await this.prisma.orders.findMany();
   };
 
   updateOrder = async (orderId, deliveryStatus) => {
-    return await this.prisma.order.update({
+    return await this.prisma.orders.update({
       where: {
         id: orderId,
       },
