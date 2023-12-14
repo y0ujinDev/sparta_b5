@@ -8,7 +8,7 @@ Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
 
 {
-    "name":"마라탕탕이",
+    "name":"마라샹궈란족",
     "address": "경기도 하남시 어쩌구 어쩌동 109호",
     "content": "운영시간 09:00 ~ 18:00",
     "category": "중식"

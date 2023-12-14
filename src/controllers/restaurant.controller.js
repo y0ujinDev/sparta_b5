@@ -32,7 +32,7 @@ export class RestaurantController {
       }
 
       const data = await this.restaurantService.createOne({
-        name, address, content, category, ownerId:32
+        name, address, content, category, ownerId:2
         // userId,
         // userName,
       });
