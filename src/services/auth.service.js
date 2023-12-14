@@ -1,4 +1,3 @@
-import { UsersRepository } from '../repositories/users.repository.js';
 import bcrypt from 'bcryptjs';
 import 'dotenv/config';
 import crypto from 'crypto';
@@ -7,7 +6,6 @@ import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
 
 //암호화 정보
-// 이 부분 에러입니다.
 const algorithm = process.env.MAIL_VERIFY_ALGORITHM;
 const key = crypto.scryptSync(
   process.env.MAIL_VERIFY_PASSWORD,
@@ -17,7 +15,9 @@ const key = crypto.scryptSync(
 const iv = crypto.randomBytes(16);
 
 export class AuthService {
-  usersRepository = new UsersRepository();
+  constructor(usersRepository) {
+    this.usersRepository = usersRepository;
+  }
 
   //회원가입
   signUp = async (email, nickname, password, isOwner) => {
@@ -105,7 +105,7 @@ export class AuthService {
     }
 
     //사용자의 userId를 바탕으로 토큰 생성 (로그인 성공)
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
     return token;

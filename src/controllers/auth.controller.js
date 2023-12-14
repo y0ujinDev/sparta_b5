@@ -1,8 +1,9 @@
 import { StatusCodes, ErrorMessages } from '../utils/constants/constants.js';
-import { AuthService } from '..//services/auth.service.js';
 
 export class AuthController {
-  authService = new AuthService();
+  constructor(authService) {
+    this.authService = authService;
+  }
 
   //회원가입
   signUp = async (req, res, next) => {
@@ -83,28 +84,33 @@ export class AuthController {
   signIn = async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const user = await this.authService.signIn(email, password);
+      const token = await this.authService.signIn(email, password);
 
       //이메일 없는 경우
-      if (user == 'noUser') {
+      if (token == 'noUser') {
         return res.status(StatusCodes.UNAUTHORIZED).json({
           message: ErrorMessages.USER_NOT_FOUND,
         });
       }
 
       //비밀번호 틀린 경우
-      if (user == 'failedPassword') {
+      if (token == 'failedPassword') {
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: ErrorMessages.INVALID_PASSWORD,
         });
       }
 
       //이메일 인증하지 않은 경우
-      if (user == 'noVerified') {
+      if (token == 'noVerified') {
         return res.status(StatusCodes.UNAUTHORIZED).json({
           message: ErrorMessages.INVALID_USER,
         });
       }
+
+      const uniqueInt = Date.now();
+      req.session[uniqueInt] = `Bearer ${token}`;
+      // console.log(req.session[uniqueInt]);
+      res.cookie('sessionKey', uniqueInt);
       return res.status(StatusCodes.OK).json({ message: '로그인 성공' });
     } catch (err) {
       next(err);
