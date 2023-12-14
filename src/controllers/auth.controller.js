@@ -78,4 +78,36 @@ export class AuthController {
       next(err);
     }
   };
+
+  //로그인
+  signIn = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      const user = await this.authService.signIn(email, password);
+
+      //이메일 없는 경우
+      if (user == 'noUser') {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+          message: ErrorMessages.USER_NOT_FOUND,
+        });
+      }
+
+      //비밀번호 틀린 경우
+      if (user == 'failedPassword') {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.INVALID_PASSWORD,
+        });
+      }
+
+      //이메일 인증하지 않은 경우
+      if (user == 'noVerified') {
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+          message: ErrorMessages.INVALID_USER,
+        });
+      }
+      return res.status(StatusCodes.OK).json({ message: '로그인 성공' });
+    } catch (err) {
+      next(err);
+    }
+  };
 }

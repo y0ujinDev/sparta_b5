@@ -4,6 +4,7 @@ import 'dotenv/config';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import jwt from 'jsonwebtoken';
 
 //암호화 정보
 const algorithm = process.env.MAIL_VERIFY_ALGORITHM;
@@ -82,5 +83,30 @@ export class AuthService {
     console.log(email);
     await this.usersRepository.verifiedUser(email);
     return;
+  };
+
+  //로그인
+  signIn = async (email, password) => {
+    //이메일 없는 경우
+    const user = await this.usersRepository.FindUserbyEmail(email);
+    if (!user) {
+      return 'noUser';
+    }
+
+    //비밀번호 틀린 경우
+    if (!(await bcrypt.compare(password, user.password))) {
+      return 'failedPassword';
+    }
+
+    //이메일 인증하지 않은 경우
+    if (!user.emailVerified) {
+      return 'noVerified';
+    }
+
+    //사용자의 userId를 바탕으로 토큰 생성 (로그인 성공)
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+    return token;
   };
 }

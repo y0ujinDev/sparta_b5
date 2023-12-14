@@ -10,4 +10,7 @@ router.post('/signup', authController.signUp);
 
 /** 이메일 인증 링크 클릭시 API **/
 router.get('/verifyemail', authController.verifyEmailByToken);
+
+/** 로그인 API **/
+router.post('/signin', authController.signIn);
 export default router;
