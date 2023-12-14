@@ -5,9 +5,9 @@ export class RestaurantService {
         this.restaurantRepository = new RestaurantRepository();
     }
 
-    createOne = async({name, address, content, menu, category}) => {
+    createOne = async({name, address, content, menu, category, ownerId}) => {
 const restaurant = await this.restaurantRepository.createOne({
-    name, address, content, menu, category
+    name, address, content, menu, category, ownerId
 })
 
 return { ... restaurant}

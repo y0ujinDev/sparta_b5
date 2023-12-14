@@ -18,7 +18,7 @@ model Users {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
   reviews       Reviews[]
-  restaurant    Restaurants?
+  restaurant    Restaurants[]
   orders        Orders[]
   carts         Carts[]
 

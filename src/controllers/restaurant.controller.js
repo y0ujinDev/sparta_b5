@@ -13,7 +13,7 @@ export class RestaurantController {
   createOne = async (req, res, next) => {
     try {
     //   const { id: userId, name: userName } = res.locals.user;
-      const { name, address, content, menu, category } = req.body;
+      const { name, address, content, category } = req.body;
 
       if (!name) {
         return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_NAME)
@@ -27,16 +27,12 @@ export class RestaurantController {
         return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_CONTENT)
       }
 
-      if (!menu) {
-        return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_MENU)
-      }
-
       if (!category) {
         return res.status(StatusCodes.BAD_REQUEST,ErrorMessages.MISSING_CATEGORY)          
       }
 
       const data = await this.restaurantService.createOne({
-        name, address, content, menu, category
+        name, address, content, category, ownerId:32
         // userId,
         // userName,
       });

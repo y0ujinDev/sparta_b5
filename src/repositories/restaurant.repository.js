@@ -1,10 +1,11 @@
 import { prisma} from '../utils/prisma/index.js'
 
 export class RestaurantRepository{
-createOne = async ({ name, address, content, menu, category }) => {
+createOne = async ({ name, address, content, menu, category, ownerId }) => {
+  console.log('-----------------------------ownerId', ownerId)
     const restaurant = await prisma.restaurants.create({
         data:{
-            name, address, content, menu, category
+             name, address, content, menu, category, ownerId
         }
     })
     return restaurant
@@ -13,6 +14,10 @@ createOne = async ({ name, address, content, menu, category }) => {
 
 updateOneById = async (id, { name, address, content, menu, category }) => {
     const restaurant = await prisma.restaurants.findUnique({ where: { id } });
+
+    if (!restaurant) {
+      throw new Error('업장 조회에 실패했습니다.');
+    }
 
  
     const updatedRestaurant = await prisma.restaurants.update({
