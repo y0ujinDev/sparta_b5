@@ -1,25 +1,35 @@
 import { Status } from '../utils/constants/constants.js';
 
 export class OrdersRepository {
-  constructor(prisma, menuRepository) {
+  constructor(prisma, cartsRepository) {
     this.prisma = prisma;
-    this.menuRepository = menuRepository;
+    this.cartsRepository = cartsRepository;
   }
 
-  insertOrder = async ({ userId, menuId }) => {
-    const menu = await this.menuRepository.findMenuById(menuId);
+  insertOrder = async ({ userId, restaurantId }) => {
+    const cart = await this.cartsRepository.findCartByUserAndRestaurant(
+      userId,
+      restaurantId,
+    );
+    const total = cart.cartItems.reduce(
+      (sum, item) => sum + item.quantity * item.menu.price,
+      0,
+    );
 
-    return await this.prisma.order.create({
+    const order = await this.prisma.orders.create({
       data: {
         userId,
-        menuId,
-        name: menu.name,
+        restaurantId,
+        total,
+        deliveryStatus: Status.ORDERED,
       },
     });
+
+    return order;
   };
 
   findOrderById = async (orderId) => {
-    return await this.prisma.order.findUnique({
+    return await this.prisma.orders.findUnique({
       where: {
         id: orderId,
       },
@@ -27,11 +37,11 @@ export class OrdersRepository {
   };
 
   findAllOrders = async () => {
-    return await this.prisma.order.findMany();
+    return await this.prisma.orders.findMany();
   };
 
   updateOrder = async (orderId, deliveryStatus) => {
-    return await this.prisma.order.update({
+    return await this.prisma.orders.update({
       where: {
         id: orderId,
       },
