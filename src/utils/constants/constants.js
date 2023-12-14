@@ -18,6 +18,13 @@ export const ErrorMessages = Object.freeze({
   MISSING_EMAIL: '이메일을 입력해주세요.',
   MISSING_PASSWORD: '비밀번호 혹은 비밀번호 재확인을 입력해주세요.',
   MISSING_NAME: '이름을 입력해주세요.',
+  MISSING_PRICE: '가격을 입력해주세요',
+  MISSING_IMAGE: '이미지를 입력해주세요',
+  MISSING_CONTENT: '내용을 입력해주세요',
+  MISSING_ADDRESS: '주소를 입력해주세요',
+  MISSING_UPDATED_INFO: '수정 정보는 최소 한 가지 이상이어야 합니다.',
+  MISSING_MENU: '메뉴를 입력해주세요',
+  MISSING_CATEGORY: '카테고리를 입력해주세요',
   ALREADY_REGISTERED: '이미 가입 된 이메일입니다.',
   PASSWORD_MISMATCH: '비밀번호와 비밀번호 재확인이 일치하지 않습니다.',
   SHORT_PASSWORD: '비밀번호를 6자리 이상 입력해주세요.',
@@ -33,7 +40,8 @@ export const ErrorMessages = Object.freeze({
   INVALID_USER: '유효한 사용자가 아닙니다.',
   TOKEN_EXPIRED: '토큰의 유효기간이 지났습니다.',
   TOKEN_VERIFICATION_FAILED: '토큰 검증에 실패하였습니다.',
-  NO_SECRET_KEY: 'JWT_SECRET 키가 존재하지 않습니다.',
+  NO_SECRET_KEY: 'JWT_SECRET 키가 존재하지 않습니다.'
+
 });
 
 export const TokenInfo = Object.freeze({

@@ -1,0 +1,19 @@
+@host = http://localhost:3000/api/restaurants/menus
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY5OTg3MjMxOSwiZXhwIjoxNjk5OTE1NTE5fQ.YwbcoCvUWWgfkLmVL8mIm1MkiZxPaV_rZ-krRv5g9Js
+
+
+### 메뉴 생성
+//이미지 업로드 때문에 thunderclient로 실행
+
+### 메뉴 목록 조회 
+GET {{host}}
+
+
+
+### 메뉴 수정 
+//이미지 업로드 때문에 thunderclient로 실행
+
+### 메뉴 삭제 
+DELETE {{host}}/1
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
