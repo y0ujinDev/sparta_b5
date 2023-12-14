@@ -7,6 +7,7 @@ import { google } from 'googleapis';
 import jwt from 'jsonwebtoken';
 
 //암호화 정보
+// 이 부분 에러입니다.
 const algorithm = process.env.MAIL_VERIFY_ALGORITHM;
 const key = crypto.scryptSync(
   process.env.MAIL_VERIFY_PASSWORD,
