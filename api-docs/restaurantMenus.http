@@ -3,36 +3,17 @@
 
 
 ### 메뉴 생성
-POST {{host}}
-Content-Type: application/json
-# Authorization: Bearer {{accessToken}}
+//이미지 업로드 때문에 thunderclient로 실행
 
-{
-    "name":"마라샹궈",
-    "price": 15000,
-    "image": "sdfasjhfdfkjlsjkf",
-    "content": "“둘이먹으면 둘다 죽음"
-}
-
-
-### 메뉴 목록 조회 -
+### 메뉴 목록 조회 
 GET {{host}}
 
 
 
-### 메뉴 수정 --개발완료
-PUT {{host}}/1
-Content-Type: application/json
-# Authorization: Bearer {{accessToken}}
+### 메뉴 수정 
+//이미지 업로드 때문에 thunderclient로 실행
 
-{
-    "name":"마라샹궈",
-    "price": 250300,
-    "image": "sdfasjhfdfkjlsjkf",
-    "content": "“둘이먹으면 사장님이 죽음"
-}
-
-### 메뉴 삭제 -- 개발완료
+### 메뉴 삭제 
 DELETE {{host}}/1
 Content-Type: application/json
 # Authorization: Bearer {{accessToken}}

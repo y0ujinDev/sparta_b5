@@ -39,7 +39,6 @@ const upload = multer({
         bucket: 'sssclass-menu-image', // 여기에 자신의 S3 버킷 이름을 넣어주세요.
         acl: 'public-read',
         key: (req, file, cb) => {
-            console.log('file',file)
             let uuid = crypto.randomUUID();
             const extArray = file.originalname.split('.');
             const ext = extArray[extArray.length - 1].toLowerCase();
