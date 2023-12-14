@@ -5,14 +5,14 @@ export class UserReviewsController {
   // 리뷰 생성
   createReview = async (req, res, next) => {
     try {
-      // const { userId } = req.session;
+      const userId = req.user.id;
       // console.log('--------------req.user', req.user);
-      // console.log('--------------userId', userId);
+      console.log('--------------userId', userId);
       const { orderId } = req.params;
       const { restaurantId, score, content } = req.body;
 
       const createReviews = await this.userReviewsService.createReview({
-        userId: 1,
+        userId,
         restaurantId,
         orderId,
         score,
@@ -26,9 +26,7 @@ export class UserReviewsController {
   // 내 리뷰조회
   getAllMyReviews = async (req, res, next) => {
     try {
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
+      const userId = req.user.id;
       const reviews = await this.userReviewsService.findAllMyReviewsByuserId(
         userId,
       );
@@ -40,9 +38,7 @@ export class UserReviewsController {
   // 리뷰수정
   updateReview = async (req, res, next) => {
     try {
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
+      const userId = req.user.id;
       const { reviewId } = req.params;
       const { score, content } = req.body;
       // console.log('---------------reviewId', reviewId);
@@ -61,10 +57,8 @@ export class UserReviewsController {
   // 리뷰삭제
   deleteReview = async (req, res, next) => {
     try {
+      const userId = req.user.id;
       const { reviewId } = req.params;
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
       const deleteReviews = await this.userReviewsService.deleteReview(
         reviewId,
         userId,

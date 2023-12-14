@@ -9,11 +9,27 @@ const userReviewsController = new UserReviewsController();
 
 // 로그인 미들웨어추가
 //리뷰생성
-router.post('/:orderId/reviews', userReviewsController.createReview);
+router.post(
+  '/:orderId/reviews',
+  authMiddleware,
+  userReviewsController.createReview,
+);
 // 내 리뷰조회
-router.get('/:orderId/reviews', userReviewsController.getAllMyReviews);
+router.get(
+  '/:orderId/reviews',
+  authMiddleware,
+  userReviewsController.getAllMyReviews,
+);
 // 리뷰수정
-router.put('/:orderId/reviews/:reviewId', userReviewsController.updateReview);
+router.put(
+  '/:orderId/reviews/:reviewId',
+  authMiddleware,
+  userReviewsController.updateReview,
+);
 // 리뷰삭제
-router.patch('/:orderId/reviews/:reviewId', userReviewsController.deleteReview);
+router.patch(
+  '/:orderId/reviews/:reviewId',
+  authMiddleware,
+  userReviewsController.deleteReview,
+);
 export default router;
