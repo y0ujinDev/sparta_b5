@@ -1,0 +1,37 @@
+@host = http://localhost:3000/api/restaurants/
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY5OTg3MjMxOSwiZXhwIjoxNjk5OTE1NTE5fQ.YwbcoCvUWWgfkLmVL8mIm1MkiZxPaV_rZ-krRv5g9Js
+
+
+### 메뉴 생성
+POST {{host}}
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
+
+{
+    "name":"마라탕탕이",
+    "address": "경기도 하남시 어쩌구 어쩌동 109호",
+    "content": "운영시간 09:00 ~ 18:00",
+    "menu": "마라샹궈",
+    "category": "중식"
+}
+
+
+
+
+
+### 업장 수정 --개발완료
+PUT {{host}}/23
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
+
+{
+    "name":"마라탕후루",
+    "address": "경기도 하남시 어쩌구 어쩌동 109호",
+    "content": "운영시간 09:00 ~ 18:00",
+    "menu": "마라샹궈, 탕후루",
+    "category": "중식"
+}
+### 업장 삭제 -- 개발완료
+DELETE {{host}}/23
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}

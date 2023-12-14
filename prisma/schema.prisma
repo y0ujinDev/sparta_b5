@@ -19,7 +19,8 @@ model Users {
   updatedAt     DateTime     @updatedAt
   reviews       Reviews[]
   restaurant    Restaurants?
-  order         Orders[]
+  orders        Orders[]
+  carts         Carts[]
 
   @@map("Users")
 }
@@ -27,45 +28,48 @@ model Users {
 model Reviews {
   id           Int         @id @default(autoincrement())
   userId       Int         @map("user_id")
+  orderId      Int         @unique @map("order_id")
   restaurantId Int         @map("restaurant_id")
   score        Int
   content      String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   user         Users       @relation(fields: [userId], references: [id])
+  order        Orders      @relation(fields: [orderId], references: [id])
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
 
   @@map("Reviews")
 }
 
 model Restaurants {
-  id         Int       @id @default(autoincrement())
-  name       String
-  address    String
-  content    String
-  menu       String
-  category   String
-  onwerId    Int       @unique @map("owner_id")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  user       Users     @relation(fields: [onwerId], references: [id])
-  reviews    Reviews[]
-  owner_menu Menus[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  content   String
+  category  String
+  ownerId   Int       @unique @map("owner_id")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  owner     Users     @relation(fields: [ownerId], references: [id])
+  menus     Menus[]
+  carts     Carts[]
+  orders    Orders[]
+  reviews   Reviews[]
 
   @@map("Restaurants")
 }
 
 model Orders {
-  id             Int      @id @default(autoincrement())
-  name           String
-  price          Int
-  deliveryStatus String   @default("ORDERED") @map("delivery_status")
-  userId         Int      @map("user_id")
-  menuId         Int      @map("menu_id")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  user           Users    @relation(fields: [userId], references: [id])
-  owner_menu     Menus    @relation(fields: [menuId], references: [id])
+  id             Int         @id @default(autoincrement())
+  total          Int
+  deliveryStatus String      @default("ORDERED") @map("delivery_status")
+  userId         Int         @map("user_id")
+  restaurantId   Int         @map("restaurant_id")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  user           Users       @relation(fields: [userId], references: [id])
+  restaurant     Restaurants @relation(fields: [restaurantId], references: [id])
+  review         Reviews?
 
   @@map("Orders")
 }
@@ -80,7 +84,29 @@ model Menus {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
-  order        Orders[]
+  cartItems    CartItems[]
 
-  @@map("Owner_menu")
+  @@map("menus")
+}
+
+model Carts {
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  restaurantId Int         @map("restaurant_id")
+  cartItems    CartItems[]
+  user         Users       @relation(fields: [userId], references: [id])
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+
+  @@map("Carts")
+}
+
+model CartItems {
+  id       Int   @id @default(autoincrement())
+  cartId   Int   @map("cart_id")
+  menuId   Int   @map("menu_id")
+  quantity Int
+  cart     Carts @relation(fields: [cartId], references: [id])
+  menu     Menus @relation(fields: [menuId], references: [id])
+
+  @@map("Cart_items")
 }
