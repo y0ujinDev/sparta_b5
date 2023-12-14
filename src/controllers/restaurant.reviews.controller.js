@@ -5,8 +5,11 @@ export class RestaurantReviewsController {
   // 전체 리뷰 조회
   getAllReviews = async (req, res, next) => {
     try {
-      const reviews = await this.restaurantReviewsService.findAllReviews();
-
+      const { restaurantId } = req.params;
+      const reviews = await this.restaurantReviewsService.findAllReviews(
+        restaurantId,
+      );
+      console.log(reviews);
       return res.status(200).json({ data: reviews });
     } catch (err) {
       next(err);

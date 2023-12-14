@@ -3,19 +3,11 @@ export class UserReviewsService {
   userReviewsRepository = new UserReviewsRepository();
 
   // 리뷰 생성
-  createReview = async ({
-    userId,
-    restaurantId,
-    // orderId,
-    reviewId,
-    score,
-    content,
-  }) => {
+  createReview = async ({ userId, restaurantId, orderId, score, content }) => {
     const createdReview = await this.userReviewsRepository.createReview({
       userId,
       restaurantId,
-      // orderId,
-      reviewId,
+      orderId,
       score,
       content,
     });
@@ -31,17 +23,20 @@ export class UserReviewsService {
     const reviews = await this.userReviewsRepository.findAllMyReviewsByuserId(
       userId,
     );
-    return {
-      // userId: reviews.userId,
-      content: reviews.content,
-      score: reviews.score,
-      createdAt: reviews.createdAt,
-      updatedAt: reviews.updatedAt,
-    };
+    return reviews.map((review) => {
+      return {
+        // userId: reviews.userId,
+        score: review.score,
+        content: review.content,
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+      };
+    });
   };
   // 리뷰수정
   updateReview = async (userId, reviewId, score, content) => {
     const review = await this.userReviewsRepository.findByReviewId(reviewId);
+    if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.userReviewsRepository.updateReview(
       userId,
       reviewId,
@@ -62,7 +57,7 @@ export class UserReviewsService {
   // 리뷰삭제
   deleteReview = async (reviewId, userId) => {
     const review = await this.userReviewsRepository.findByReviewId(reviewId);
-    if (!reviewId) throw new Error('리뷰가 존재하지 않습니다.');
+    if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.userReviewsRepository.deleteReview(reviewId, userId);
     return {
       reviewId: review.reviewId,

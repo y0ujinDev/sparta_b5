@@ -1,20 +1,12 @@
 import { prisma } from '../utils/prisma/index.js';
 export class UserReviewsRepository {
   // 리뷰 생성
-  createReview = async ({
-    userId,
-    restaurantId,
-    // orderId,
-    reviewId,
-    score,
-    content,
-  }) => {
+  createReview = async ({ userId, restaurantId, orderId, score, content }) => {
     const createdReview = await prisma.reviews.create({
       data: {
         userId,
         restaurantId: +restaurantId,
-        // orderId,
-        reviewId,
+        orderId: +orderId,
         score: +score,
         content,
       },
@@ -23,9 +15,7 @@ export class UserReviewsRepository {
   };
   // 내 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
-    const foundAllMyReviewsByuserId = await prisma.reviews.findFirst({
-      where: { userId: +userId },
-    });
+    const foundAllMyReviewsByuserId = await prisma.reviews.findMany(userId);
     return foundAllMyReviewsByuserId;
   };
   // ReviewId로 review 찾기

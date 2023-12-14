@@ -2,18 +2,19 @@ import { RestaurantReviewsRepository } from '../repositories/restaurant.reviews.
 export class RestaurantReviewsService {
   restaurantReviewsRepository = new RestaurantReviewsRepository();
   // 전체 리뷰 조회
-  findAllReviews = async () => {
-    const reviews = await this.restaurantReviewsRepository.findAllReviews();
-
+  findAllReviews = async (restaurantId) => {
+    const reviews = await this.restaurantReviewsRepository.findAllReviews(
+      restaurantId,
+    );
     reviews.sort((a, b) => {
       return b.createdAt - a.createdAt;
     });
-
+    console.log(reviews);
     return reviews.map((reviews) => {
       return {
-        nickname: reviews.nickname,
+        nickname: reviews.user.nickname,
+        score: reviews.score,
         content: reviews.content,
-        score: reviews.content,
         createdAt: reviews.createdAt,
         updatedAt: reviews.updatedAt,
       };
