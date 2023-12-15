@@ -50,6 +50,7 @@ router.delete(
 router.put(
   '/:restaurantId/:orderId',
   needSignin,
+  restaurantOwnerCheck,
   ordersController.handleUpdateOrder,
 );
 
