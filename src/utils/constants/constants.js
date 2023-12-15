@@ -40,8 +40,8 @@ export const ErrorMessages = Object.freeze({
   INVALID_USER: '유효한 사용자가 아닙니다.',
   TOKEN_EXPIRED: '토큰의 유효기간이 지났습니다.',
   TOKEN_VERIFICATION_FAILED: '토큰 검증에 실패하였습니다.',
-  NO_SECRET_KEY: 'JWT_SECRET 키가 존재하지 않습니다.'
-
+  NO_SECRET_KEY: 'JWT_SECRET 키가 존재하지 않습니다.',
+  EXISTING_RESTAURANT: '업장은 최대 한 개까지 생성할 수 있습니다.',
 });
 
 export const TokenInfo = Object.freeze({

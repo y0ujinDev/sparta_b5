@@ -17,10 +17,10 @@ model Users {
   emailVerified Boolean      @default(false) @map("email_verified")
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  reviews       Reviews[]
-  restaurant    Restaurants[]
-  orders        Orders[]
   carts         Carts[]
+  orders        Orders[]
+  restaurant    Restaurants?
+  reviews       Reviews[]
 
   @@map("Users")
 }
@@ -34,10 +34,12 @@ model Reviews {
   content      String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  user         Users       @relation(fields: [userId], references: [id])
   order        Orders      @relation(fields: [orderId], references: [id])
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  user         Users       @relation(fields: [userId], references: [id])
 
+  @@index([restaurantId], map: "Reviews_restaurant_id_fkey")
+  @@index([userId], map: "Reviews_user_id_fkey")
   @@map("Reviews")
 }
 
@@ -50,11 +52,11 @@ model Restaurants {
   ownerId   Int       @unique @map("owner_id")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  owner     Users     @relation(fields: [ownerId], references: [id])
-  menus     Menus[]
   carts     Carts[]
   orders    Orders[]
+  owner     Users     @relation(fields: [ownerId], references: [id])
   reviews   Reviews[]
+  menus     Menus[]
 
   @@map("Restaurants")
 }
@@ -67,10 +69,12 @@ model Orders {
   restaurantId   Int         @map("restaurant_id")
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
-  user           Users       @relation(fields: [userId], references: [id])
   restaurant     Restaurants @relation(fields: [restaurantId], references: [id])
+  user           Users       @relation(fields: [userId], references: [id])
   review         Reviews?
 
+  @@index([restaurantId], map: "Orders_restaurant_id_fkey")
+  @@index([userId], map: "Orders_user_id_fkey")
   @@map("Orders")
 }
 
@@ -83,9 +87,10 @@ model Menus {
   restaurantId Int         @map("restaurant_id")
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
   cartItems    CartItems[]
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
+  @@index([restaurantId], map: "menus_restaurant_id_fkey")
   @@map("menus")
 }
 
@@ -94,9 +99,11 @@ model Carts {
   userId       Int         @map("user_id")
   restaurantId Int         @map("restaurant_id")
   cartItems    CartItems[]
-  user         Users       @relation(fields: [userId], references: [id])
   restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  user         Users       @relation(fields: [userId], references: [id])
 
+  @@index([restaurantId], map: "Carts_restaurant_id_fkey")
+  @@index([userId], map: "Carts_user_id_fkey")
   @@map("Carts")
 }
 
@@ -108,5 +115,7 @@ model CartItems {
   cart     Carts @relation(fields: [cartId], references: [id])
   menu     Menus @relation(fields: [menuId], references: [id])
 
+  @@index([cartId], map: "Cart_items_cart_id_fkey")
+  @@index([menuId], map: "Cart_items_menu_id_fkey")
   @@map("Cart_items")
 }

@@ -8,28 +8,28 @@ Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
 
 {
-    "name":"마라샹궈란족",
+    "name":"미스초밥왕",
     "address": "경기도 하남시 어쩌구 어쩌동 109호",
     "content": "운영시간 09:00 ~ 18:00",
-    "category": "중식"
+    "category": "일식"
 }
 
 
 
 
 
-### 업장 수정 --개발완료
-PUT {{host}}/24
+### 업장 수정 
+PUT {{host}}/6
 Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
 
 {
-    "name":"마라탕후루",
+    "name":"백종원왕소주",
     "address": "경기도 하남시 어쩌구 어쩌동 109호",
     "content": "운영시간 09:00 ~ 18:00",
-    "category": "중식"
+    "category": "한식"
 }
 ### 업장 삭제 -- 개발완료
-DELETE {{host}}/23
+DELETE {{host}}/3
 Content-Type: application/json
 # Authorization: Bearer {{accessToken}}

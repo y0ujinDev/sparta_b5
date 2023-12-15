@@ -12,7 +12,7 @@ router.use('/', AuthRouter);
 router.use('/orders', OrdersRouter);
 router.use('/orders', UserReviewsRouter);
 router.use('/restaurants', RestaurantReviewsRouter);
-router.use('/restaurants/menus', restaurantMenusRouter);
+router.use('/restaurants/:restaurantId/menus',restaurantMenusRouter);
 router.use('/restaurants', restaurantRouter);
 
 export default router;
