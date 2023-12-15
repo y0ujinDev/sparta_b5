@@ -1,41 +1,69 @@
 import { UserReviewsService } from '../services/user.reviews.services.js';
+import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
 export class UserReviewsController {
   userReviewsService = new UserReviewsService();
 
   // 리뷰 생성
   createReview = async (req, res, next) => {
     try {
-      // const { userId } = res.locals.user;
-      // 최신 dev시 변경할 것 restaurantI를 orderId로!
-      // 작동확인을 위해 orderId를 restaurantId로 변경함.
-      // const { orderId } = req.params;
-      const { restaurantId } = req.params;
-      const { reviewId, score, content } = req.body;
+      const userId = req.user.id;
+      const { orderId } = req.params;
+      const { restaurantId, score, content } = req.body;
+      if (!restaurantId) {
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ message: ErrorMessages.MISSING_RESTAURANTID });
+      }
+      if (!score) {
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ message: ErrorMessages.MISSING_SCORE });
+      }
+
+      if (!content) {
+        return res
+          .status(StatusCodes.BAD_REQUEST)
+          .json({ message: ErrorMessages.MISSING_CONTENT });
+      }
 
       const createReviews = await this.userReviewsService.createReview({
-        userId: +1,
+        userId,
         restaurantId,
-        // orderId,
-        reviewId,
+        orderId,
         score,
         content,
       });
-      return res.status(200).send({ data: createReviews });
+      return res.status(StatusCodes.CREATED).json({ data: createReviews });
     } catch (err) {
       next(err);
     }
   };
-  // 내 리뷰조회
+  // 주문번호에 따른 내 리뷰조회
+  getAllMyReviewsByOrderId = async (req, res, next) => {
+    try {
+      const userId = req.user.id;
+      const { orderId } = req.params;
+      console.log('----------orderId', orderId);
+      const reviews =
+        await this.userReviewsService.findAllMyReviewsByuserIdAndOrderId(
+          userId,
+          orderId,
+        );
+
+      return res.status(StatusCodes.OK).json({ data: reviews });
+    } catch (err) {
+      next(err);
+    }
+  };
+  // 내 전체 리뷰조회
   getAllMyReviews = async (req, res, next) => {
     try {
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
+      const userId = req.user.id;
       const reviews = await this.userReviewsService.findAllMyReviewsByuserId(
         userId,
       );
 
-      return res.status(200).json({ data: reviews });
+      return res.status(StatusCodes.OK).json({ data: reviews });
     } catch (err) {
       next(err);
     }
@@ -43,9 +71,7 @@ export class UserReviewsController {
   // 리뷰수정
   updateReview = async (req, res, next) => {
     try {
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
+      const userId = req.user.id;
       const { reviewId } = req.params;
       const { score, content } = req.body;
 
@@ -56,7 +82,7 @@ export class UserReviewsController {
         content,
       );
 
-      return res.status(200).send({ data: updateReviews });
+      return res.status(StatusCodes.OK).json({ data: updateReviews });
     } catch (err) {
       next(err);
     }
@@ -64,16 +90,15 @@ export class UserReviewsController {
   // 리뷰삭제
   deleteReview = async (req, res, next) => {
     try {
+      const userId = req.user.id;
       const { reviewId } = req.params;
-      // const { userId } = res.locals.user;
-      // 작동확인을 위해 req.body에 넣음
-      const { userId } = req.body;
+
       const deleteReviews = await this.userReviewsService.deleteReview(
         reviewId,
         userId,
       );
 
-      return res.status(200).send({ message: '삭제되었습니다.' });
+      return res.status(StatusCodes.OK).json({ message: '삭제되었습니다.' });
     } catch (err) {
       next(err);
     }

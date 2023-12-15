@@ -3,19 +3,11 @@ export class UserReviewsService {
   userReviewsRepository = new UserReviewsRepository();
 
   // 리뷰 생성
-  createReview = async ({
-    userId,
-    restaurantId,
-    // orderId,
-    reviewId,
-    score,
-    content,
-  }) => {
+  createReview = async ({ userId, restaurantId, orderId, score, content }) => {
     const createdReview = await this.userReviewsRepository.createReview({
       userId,
       restaurantId,
-      // orderId,
-      reviewId,
+      orderId,
       score,
       content,
     });
@@ -26,22 +18,42 @@ export class UserReviewsService {
       content: createdReview.content,
     };
   };
-  // 내 리뷰조회
+
+  // 주문번호에 따른 내 리뷰조회
+  findAllMyReviewsByuserIdAndOrderId = async (userId, orderId) => {
+    const review =
+      await this.userReviewsRepository.findAllMyReviewsByuserIdAndOrderId(
+        userId,
+        orderId,
+      );
+    return {
+      score: review.score,
+      content: review.content,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
+    };
+  };
+  // 내 전체 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
     const reviews = await this.userReviewsRepository.findAllMyReviewsByuserId(
       userId,
     );
-    return {
-      // userId: reviews.userId,
-      content: reviews.content,
-      score: reviews.score,
-      createdAt: reviews.createdAt,
-      updatedAt: reviews.updatedAt,
-    };
+    reviews.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
+    return reviews.map((review) => {
+      return {
+        score: review.score,
+        content: review.content,
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+      };
+    });
   };
   // 리뷰수정
   updateReview = async (userId, reviewId, score, content) => {
     const review = await this.userReviewsRepository.findByReviewId(reviewId);
+    if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.userReviewsRepository.updateReview(
       userId,
       reviewId,
@@ -62,7 +74,7 @@ export class UserReviewsService {
   // 리뷰삭제
   deleteReview = async (reviewId, userId) => {
     const review = await this.userReviewsRepository.findByReviewId(reviewId);
-    if (!reviewId) throw new Error('리뷰가 존재하지 않습니다.');
+    if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.userReviewsRepository.deleteReview(reviewId, userId);
     return {
       reviewId: review.reviewId,

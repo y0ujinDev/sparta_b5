@@ -42,6 +42,11 @@ export const ErrorMessages = Object.freeze({
   TOKEN_VERIFICATION_FAILED: '토큰 검증에 실패하였습니다.',
   NO_SECRET_KEY: 'JWT_SECRET 키가 존재하지 않습니다.',
   EXISTING_RESTAURANT: '업장은 최대 한 개까지 생성할 수 있습니다.',
+  MISSING_REVIEWID: '리뷰가 존재하지 않습니다.',
+  MISSING_RESTAURANTID: '업장이 존재하지 않습니다.',
+  MISSING_SCORE: '별점을 입력해주세요',
+  MISSING_CONTENT: '내용을 입력해주세요',
+  MISSING_REVIEWS: '리뷰가 존재하지 않습니다.',
 });
 
 export const TokenInfo = Object.freeze({
