@@ -1,6 +1,14 @@
+import { createError } from './../utils/errorResponse.js';
+import {
+  StatusCodes,
+  ErrorMessages,
+  Status,
+} from './../utils/constants/constants.js';
+
 export class OrdersService {
-  constructor(ordersRepository) {
+  constructor(ordersRepository, cartsRepository) {
     this.ordersRepository = ordersRepository;
+    this.cartsRepository = cartsRepository;
   }
 
   createOrder = async ({ userId, restaurantId }) => {
@@ -9,11 +17,26 @@ export class OrdersService {
       restaurantId,
     });
 
-    return order;
+    const cart = await this.cartsRepository.getCartById({
+      userId,
+      restaurantId,
+    });
+
+    if (!cart || !cart.cartItems.length) {
+      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.CART_NOT_FOUND);
+    }
+
+    await this.cartsRepository.clearCart({ userId, restaurantId });
+
+    return order || [];
   };
 
   getOrder = async (orderId) => {
     const order = await this.ordersRepository.findOrderById(orderId);
+
+    if (!order) {
+      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.ORDER_NOT_FOUND);
+    }
 
     return order;
   };
@@ -24,11 +47,33 @@ export class OrdersService {
     return orders;
   };
 
-  updataOrder = async (orderId, deliveryStatus) => {
-    const order = await this.ordersRepository.updateOrder(
-      orderId,
-      deliveryStatus,
-    );
+  updateOrder = async ({ orderId, deliveryStatus }) => {
+    const order = await this.ordersRepository.findOrderById(orderId);
+
+    if (!order) {
+      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.ORDER_NOT_FOUND);
+    }
+
+    if (
+      deliveryStatus === Status.ORDERED ||
+      deliveryStatus === Status.DELIVERYED
+    ) {
+      throw createError(StatusCodes.BAD_REQUEST, ErrorMessages.INVALID_STATUS);
+    }
+
+    await this.ordersRepository.updateOrder({ orderId, deliveryStatus });
+
+    return order;
+  };
+
+  deleteOrder = async (orderId) => {
+    const order = await this.ordersRepository.findOrderById(orderId);
+
+    if (!order) {
+      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.ORDER_NOT_FOUND);
+    }
+
+    await this.ordersRepository.deleteOrder(orderId);
 
     return order;
   };

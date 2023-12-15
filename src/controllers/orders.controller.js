@@ -7,7 +7,7 @@ export class OrdersController {
 
   handleCreateOrder = async (req, res, next) => {
     const { restaurantId } = req.params;
-    const { userId } = req.locals.user.id;
+    const { id: userId } = req.user;
     try {
       const order = await this.ordersService.createOrder({
         userId,
@@ -54,14 +54,27 @@ export class OrdersController {
     const { orderId } = req.params;
     const { deliveryStatus } = req.body;
     try {
-      const order = await this.ordersService.updateOrder(
+      const order = await this.ordersService.updateOrder({
         orderId,
         deliveryStatus,
-      );
+      });
 
       return res.status(StatusCodes.OK).json({
         message: '배달 상태가 업데이트 되었습니다.',
         data: order,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  handleDeleteOrder = async (req, res, next) => {
+    const { orderId } = req.params;
+    try {
+      await this.ordersService.deleteOrder(orderId);
+
+      return res.status(StatusCodes.OK).json({
+        message: '주문이 취소되었습니다.',
       });
     } catch (err) {
       next(err);

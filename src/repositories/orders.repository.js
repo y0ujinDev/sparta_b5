@@ -6,11 +6,11 @@ export class OrdersRepository {
     this.cartsRepository = cartsRepository;
   }
 
-  insertOrder = async ({ userId, restaurantId }) => {
-    const cart = await this.cartsRepository.findCartByUserAndRestaurant(
+  createOrder = async ({ userId, restaurantId }) => {
+    const cart = await this.cartsRepository.getCartById({
       userId,
       restaurantId,
-    );
+    });
     const total = cart.cartItems.reduce(
       (sum, item) => sum + item.quantity * item.menu.price,
       0,
@@ -19,7 +19,7 @@ export class OrdersRepository {
     const order = await this.prisma.orders.create({
       data: {
         userId,
-        restaurantId,
+        restaurantId: +restaurantId,
         total,
         deliveryStatus: Status.ORDERED,
       },
@@ -31,7 +31,7 @@ export class OrdersRepository {
   findOrderById = async (orderId) => {
     return await this.prisma.orders.findUnique({
       where: {
-        id: orderId,
+        id: +orderId,
       },
     });
   };
@@ -40,13 +40,21 @@ export class OrdersRepository {
     return await this.prisma.orders.findMany();
   };
 
-  updateOrder = async (orderId, deliveryStatus) => {
+  updateOrder = async ({ orderId, deliveryStatus }) => {
     return await this.prisma.orders.update({
       where: {
-        id: orderId,
+        id: +orderId,
       },
       data: {
         deliveryStatus,
+      },
+    });
+  };
+
+  deleteOrder = async (orderId) => {
+    return await this.prisma.orders.delete({
+      where: {
+        id: +orderId,
       },
     });
   };

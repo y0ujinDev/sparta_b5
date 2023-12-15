@@ -1,4 +1,6 @@
-export const StatusCodes = Object.freeze({
+import { deepFreeze } from '../../utils/deepFreeze.js';
+
+export const StatusCodes = deepFreeze({
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
@@ -9,12 +11,12 @@ export const StatusCodes = Object.freeze({
   INTERNAL_SERVER_ERROR: 500,
 });
 
-export const Status = Object.freeze({
+export const Status = deepFreeze({
   ORDERED: '주문 완료',
   DELEVERYED: '배달 완료',
 });
 
-export const ErrorMessages = Object.freeze({
+export const ErrorMessages = deepFreeze({
   MISSING_EMAIL: '이메일을 입력해주세요.',
   MISSING_PASSWORD: '비밀번호 혹은 비밀번호 재확인을 입력해주세요.',
   MISSING_NAME: '이름을 입력해주세요.',
@@ -46,8 +48,11 @@ export const ErrorMessages = Object.freeze({
   MISSING_SCORE: '별점을 입력해주세요',
   MISSING_CONTENT: '내용을 입력해주세요',
   MISSING_REVIEWS: '리뷰가 존재하지 않습니다.',
+  CART_NOT_FOUND: '장바구니를 찾을 수 없습니다.',
+  CART_ITEM_NOT_FOUND: '장바구니 내 상품을 찾을 수 없습니다.',
+  ORDER_NOT_FOUND: '주문을 찾을 수 없습니다.',
 });
 
-export const TokenInfo = Object.freeze({
+export const TokenInfo = deepFreeze({
   EXPIRATION_TIME: '12h',
 });
