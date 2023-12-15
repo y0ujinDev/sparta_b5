@@ -17,7 +17,7 @@ export class CartsService {
 
   // 장바구니 조회
   getCart = async ({ userId, restaurantId }) => {
-    const cart = await this.cartsRepository.getCartById({
+    let cart = await this.cartsRepository.getCartById({
       userId,
       restaurantId,
     });
