@@ -13,28 +13,30 @@ export class RestaurantController {
       const { name, address, content, category } = req.body;
       const ownerId = req.user.id;
       if (!name) {
-        return res.status(StatusCodes.BAD_REQUEST, ErrorMessages.MISSING_NAME);
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.MISSING_NAME,
+        });
       }
 
       if (!address) {
         return res.status(
-          StatusCodes.BAD_REQUEST,
-          ErrorMessages.MISSING_ADDRESS,
-        );
+          StatusCodes.BAD_REQUEST).json({
+            message: ErrorMessages.MISSING_ADDRESS,
+          });
       }
 
       if (!content) {
         return res.status(
-          StatusCodes.BAD_REQUEST,
-          ErrorMessages.MISSING_CONTENT,
-        );
+          StatusCodes.BAD_REQUEST).json({
+            message: ErrorMessages.MISSING_CONTENT,
+          });
       }
 
       if (!category) {
         return res.status(
-          StatusCodes.BAD_REQUEST,
-          ErrorMessages.MISSING_CATEGORY,
-        );
+          StatusCodes.BAD_REQUEST).json({
+            message: ErrorMessages.MISSING_CATEGORY,
+          });
       }
       
       const isOwner = req.user?.isOwner;

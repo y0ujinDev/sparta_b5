@@ -11,12 +11,12 @@ createOne = async ({ name, address, content, category, ownerId }) => {
 }
 
 findByOwnerId= async({ ownerId })=> {
-const owner = await prisma.restaurants.findFirst({
+const restaurantInfo = await prisma.restaurants.findFirst({
   where:{
     ownerId: ownerId,
   }
 })
-return owner
+return restaurantInfo
 }
 
 

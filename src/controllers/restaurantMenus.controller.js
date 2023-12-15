@@ -13,8 +13,7 @@ export class RestaurantMenusController {
       const { name, price, content } = req.body;
       const { key: image } = req.file;
       const { restaurantId } = req.params;
-      console.log({ params: req.params });
-      console.log( { restaurantId })
+   
 
       if (!name) {
         return res.status(StatusCodes.BAD_REQUEST).json({
@@ -94,9 +93,9 @@ export class RestaurantMenusController {
       // 수정 정보가 하나도 없는 경우
       if (!name && !price && !image && !content) {
         return res.status(
-          StatusCodes.BAD_REQUEST,
-          ErrorMessages.MISSING_UPDATED_INFO,
-        );
+          StatusCodes.BAD_REQUEST).json({
+            message: ErrorMessages.MISSING_UPDATED_INFO,
+          });
       }
 
       const data = await this.restaurantMenusService.updateOne({
@@ -122,8 +121,7 @@ export class RestaurantMenusController {
       const { menuId } = req.params;
 
       const data = await this.restaurantMenusService.deleteOne({
-        // userId,
-        // userName,
+
         id: +menuId,
       });
 
