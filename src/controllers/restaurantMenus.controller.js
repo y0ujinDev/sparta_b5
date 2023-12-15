@@ -90,14 +90,31 @@ export class RestaurantMenusController {
       const { key: image } = req.file;
       const { name, price, content } = req.body;
 
-      // 수정 정보가 하나도 없는 경우
-      if (!name && !price && !image && !content) {
-        return res.status(
-          StatusCodes.BAD_REQUEST).json({
-            message: ErrorMessages.MISSING_UPDATED_INFO,
-          });
+
+      if (!name) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.MISSING_NAME,
+        });
       }
 
+      if (!price) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.MISSING_PRICE,
+        });
+      }
+
+      if (!image) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.MISSING_IMAGE,
+        });
+      }
+
+      if (!content) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ErrorMessages.MISSING_CONTENT,
+        });
+      }
+      
       const data = await this.restaurantMenusService.updateOne({
         name,
         price: +price,
