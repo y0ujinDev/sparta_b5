@@ -1,8 +1,8 @@
 import { RestaurantRepository } from '../repositories/restaurant.repository.js';
 
 export class RestaurantService {
-  constructor() {
-    this.restaurantRepository = new RestaurantRepository();
+  constructor(restaurantRepository) {
+    this.restaurantRepository = restaurantRepository;
   }
 
   createOne = async ({ name, address, content, category, ownerId }) => {

@@ -1,0 +1,104 @@
+@font-face {
+    font-family: 'KCC-Ganpan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* 모든 요소에 폰트 적용 */
+  * {
+    font-family: 'KCC-Ganpan', Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #00b0fb;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .header-buttons button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 30px;
+  }
+  
+  .header-buttons button img {
+    width: 70px;
+    height: 70px;
+  }
+  
+  /* 이 부분에 버튼에 대한 호버 효과를 추가합니다 */
+  .header-buttons button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .menu-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .menu-item img {
+    max-width: 200px;
+    max-height: 200px;
+    margin-right: 15px;
+  }
+  
+  .menu-item .menu-description {
+    flex: 1;
+  }
+  
+  .menu-item button {
+    padding: 8px 20px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menu-item button:hover {
+    background-color: #00b0fb;
+  }
+  
+
+  .business-details {
+      display: flex;
+      flex-direction: column;
+  }
+ 
+
+.business-info {
+    display: flex;
+    flex-direction: column;
+    
+    text-align: left;
+}

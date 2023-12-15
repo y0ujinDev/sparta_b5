@@ -4,7 +4,7 @@ export class CartsRepository {
   }
 
   createCart = async ({ userId, restaurantId }) => {
-    const cart = await this.prisma.carts.createCart({
+    const cart = await this.prisma.carts.create({
       userId,
       restaurantId: +restaurantId,
     });

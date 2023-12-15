@@ -1,6 +1,4 @@
 @host = http://localhost:3000/api/restaurants/
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY5OTg3MjMxOSwiZXhwIjoxNjk5OTE1NTE5fQ.YwbcoCvUWWgfkLmVL8mIm1MkiZxPaV_rZ-krRv5g9Js
-
 
 ### 업장 생성
 POST {{host}}
@@ -8,7 +6,7 @@ Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
 
 {
-    "name":"미스초밥왕",
+    "name":"연어초밥왕",
     "address": "경기도 하남시 어쩌구 어쩌동 109호",
     "content": "운영시간 09:00 ~ 18:00",
     "category": "일식"
@@ -24,7 +22,7 @@ Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
 
 {
-    "name":"백종원왕소주",
+    "name":"백종원왕소주2",
     "address": "경기도 하남시 어쩌구 어쩌동 109호",
     "content": "운영시간 09:00 ~ 18:00",
     "category": "한식"

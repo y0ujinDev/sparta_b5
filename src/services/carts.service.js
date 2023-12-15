@@ -24,6 +24,7 @@ export class CartsService {
     if (!cart) {
       cart = await this.cartsRepository.createCart({ userId, restaurantId });
     }
+    return cart
   };
 
   // 장바구니 메뉴 추가
