@@ -26,4 +26,27 @@ export class UsersRepository {
     });
     return exituser;
   };
+
+  // 포인트 관련 로직
+  deductPoints = async (userId, points) => {
+    const user = await this.prisma.users.findUnique({ where: { id: userId } });
+
+    const updatedPoint = user.point - points;
+
+    return this.prisma.users.update({
+      where: { id: userId },
+      data: { point: updatedPoint },
+    });
+  };
+
+  addPoints = async (userId, points) => {
+    const user = await this.prisma.users.findUnique({ where: { id: userId } });
+
+    const updatedPoint = user.point + points;
+
+    return this.prisma.users.update({
+      where: { id: userId },
+      data: { point: updatedPoint },
+    });
+  };
 }
