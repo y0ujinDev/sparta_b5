@@ -88,7 +88,7 @@ model Menus {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   cartItems    CartItems[]
-  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@index([restaurantId], map: "menus_restaurant_id_fkey")
   @@map("menus")

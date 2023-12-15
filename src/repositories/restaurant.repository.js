@@ -1,18 +1,33 @@
 import { prisma} from '../utils/prisma/index.js'
 
 export class RestaurantRepository{
-createOne = async ({ name, address, content, menu, category }) => {
+createOne = async ({ name, address, content, category, ownerId }) => {
     const restaurant = await prisma.restaurants.create({
         data:{
-            name, address, content, menu, category
+             name, address, content, category, ownerId
         }
     })
     return restaurant
 }
 
+findByOwnerId= async({ ownerId })=> {
+const restaurantInfo = await prisma.restaurants.findFirst({
+  where:{
+    ownerId: ownerId,
+  }
+})
+return restaurantInfo
+}
 
-updateOneById = async (id, { name, address, content, menu, category }) => {
+
+
+
+updateOneById = async (id, { name, address, content, category }) => {
     const restaurant = await prisma.restaurants.findUnique({ where: { id } });
+
+    if (!restaurant) {
+      throw new Error('업장 조회에 실패했습니다.');
+    }
 
  
     const updatedRestaurant = await prisma.restaurants.update({
@@ -21,7 +36,6 @@ updateOneById = async (id, { name, address, content, menu, category }) => {
         ...(name && { name }),
         ...(address && { address }),
         ...(content && { content }),
-        ...(menu && { menu }),
         ...(category && { category }),
       },
     });
@@ -30,9 +44,7 @@ updateOneById = async (id, { name, address, content, menu, category }) => {
   };
 
   deleteOneById = async (id) => {
-    const restaurant = await prisma.restaurants.findUnique({ where: { id } });
-
-    
+   
     const deletedRestaurant = await prisma.restaurants.delete({ where: { id } });
 
     return deletedRestaurant;
