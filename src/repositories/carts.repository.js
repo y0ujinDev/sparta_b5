@@ -1,8 +1,16 @@
-// CartsRepository.js
 export class CartsRepository {
   constructor(prisma) {
     this.prisma = prisma;
   }
+
+  createCart = async ({ userId, restaurantId }) => {
+    const cart = await this.prisma.carts.createCart({
+      userId,
+      restaurantId: +restaurantId,
+    });
+
+    return cart;
+  };
 
   // 장바구니 조회
   getCartById = async ({ userId, restaurantId }) => {

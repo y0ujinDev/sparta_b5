@@ -6,9 +6,24 @@ export class CartsService {
     this.cartsRepository = cartsRepository;
   }
 
+  createCart = async ({ userId, restaurantId }) => {
+    const cart = await this.cartsRepository.createCart({
+      userId,
+      restaurantId,
+    });
+
+    return cart;
+  };
+
   // 장바구니 조회
   getCart = async ({ userId, restaurantId }) => {
-    return await this.cartsRepository.getCartById({ userId, restaurantId });
+    const cart = await this.cartsRepository.getCartById({
+      userId,
+      restaurantId,
+    });
+    if (!cart) {
+      cart = await this.cartsRepository.createCart({ userId, restaurantId });
+    }
   };
 
   // 장바구니 메뉴 추가
@@ -19,7 +34,8 @@ export class CartsService {
     });
 
     if (!cart) {
-      throw createError(StatusCodes.NOT_FOUND, ErrorMessages.CART_NOT_FOUND);
+      cart = await this.cartsRepository.createCart({ userId, restaurantId });
+      return cart;
     } else {
       const existingCartItem = await this.cartsRepository.findCartItem({
         cartId: cart.id,
