@@ -30,7 +30,7 @@ export class CartsService {
 
   // 장바구니 메뉴 추가
   addMenu = async ({ userId, restaurantId, menuId }) => {
-    const cart = await this.cartsRepository.getCartById({
+    let cart = await this.cartsRepository.getCartById({
       userId,
       restaurantId,
     });
