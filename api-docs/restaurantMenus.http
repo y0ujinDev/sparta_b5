@@ -1,4 +1,4 @@
-@host = http://localhost:3000/api/restaurants/menus
+@host = http://localhost:3000/api/restaurants
 @accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY5OTg3MjMxOSwiZXhwIjoxNjk5OTE1NTE5fQ.YwbcoCvUWWgfkLmVL8mIm1MkiZxPaV_rZ-krRv5g9Js
 
 
@@ -6,7 +6,7 @@
 //이미지 업로드 때문에 thunderclient로 실행
 
 ### 메뉴 목록 조회 
-GET {{host}}
+GET {{host}}/3/menus
 
 
 
@@ -14,6 +14,6 @@ GET {{host}}
 //이미지 업로드 때문에 thunderclient로 실행
 
 ### 메뉴 삭제 
-DELETE {{host}}/1
+DELETE {{host}}/2/menus
 Content-Type: application/json
 # Authorization: Bearer {{accessToken}}
