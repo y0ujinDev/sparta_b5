@@ -4,13 +4,22 @@ import { OrdersController } from '../controllers/orders.controller.js';
 import { OrdersService } from '../services/orders.service.js';
 import { OrdersRepository } from '../repositories/orders.repository.js';
 import { CartsRepository } from '../repositories/carts.repository.js';
+import { UsersRepository } from '../repositories/users.repository.js';
+import { RestaurantRepository } from '../repositories/restaurant.repository.js';
 import needSignin from '../middlewares/needSignin.middleware.js';
 
 const router = express.Router();
 
 const cartsRepository = new CartsRepository(prisma);
+const usersRepository = new UsersRepository(prisma);
+const restaurantRepository = new RestaurantRepository(prisma);
 const ordersRepository = new OrdersRepository(prisma, cartsRepository);
-const ordersService = new OrdersService(ordersRepository, cartsRepository);
+const ordersService = new OrdersService(
+  ordersRepository,
+  cartsRepository,
+  usersRepository,
+  restaurantRepository,
+);
 const ordersController = new OrdersController(ordersService);
 
 // 주문 생성 API

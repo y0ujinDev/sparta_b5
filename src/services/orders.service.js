@@ -6,9 +6,16 @@ import {
 } from './../utils/constants/constants.js';
 
 export class OrdersService {
-  constructor(ordersRepository, cartsRepository) {
+  constructor(
+    ordersRepository,
+    cartsRepository,
+    usersRepository,
+    restaurantRepository,
+  ) {
     this.ordersRepository = ordersRepository;
     this.cartsRepository = cartsRepository;
+    this.usersRepository = usersRepository;
+    this.restaurantRepository = restaurantRepository;
   }
 
   createOrder = async ({ userId, restaurantId }) => {
@@ -26,7 +33,26 @@ export class OrdersService {
       throw createError(StatusCodes.NOT_FOUND, ErrorMessages.CART_NOT_FOUND);
     }
 
+    // 주문 생성 시 장바구니 초기화
     await this.cartsRepository.clearCart({ userId, restaurantId });
+
+    // 포인트 관련 로직
+    const restaurant = await this.restaurantRepository.findById(restaurantId);
+
+    if (!restaurant) {
+      throw createError(
+        StatusCodes.NOT_FOUND,
+        ErrorMessages.RESTAURANT_NOT_FOUND,
+      );
+    }
+
+    const totalPoints = cart.cartItems.reduce(
+      (sum, item) => sum + item.quantity * item.menu.price,
+      0,
+    );
+
+    await this.usersRepository.deductPoints(userId, totalPoints);
+    await this.usersRepository.addPoints(restaurant.ownerId, totalPoints);
 
     return order || [];
   };
