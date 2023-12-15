@@ -24,12 +24,7 @@ const ordersService = new OrdersService(
 const ordersController = new OrdersController(ordersService);
 
 // 주문 생성 API
-router.post(
-  '/:restaurantId',
-  needSignin,
-  restaurantOwnerCheck,
-  ordersController.handleCreateOrder,
-);
+router.post('/:restaurantId', needSignin, ordersController.handleCreateOrder);
 // 전체 주문 조회 API
 router.get(
   '/:restaurantId',
