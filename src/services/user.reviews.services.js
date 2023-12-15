@@ -18,14 +18,31 @@ export class UserReviewsService {
       content: createdReview.content,
     };
   };
-  // 내 리뷰조회
+
+  // 주문번호에 따른 내 리뷰조회
+  findAllMyReviewsByuserIdAndOrderId = async (userId, orderId) => {
+    const review =
+      await this.userReviewsRepository.findAllMyReviewsByuserIdAndOrderId(
+        userId,
+        orderId,
+      );
+    return {
+      score: review.score,
+      content: review.content,
+      createdAt: review.createdAt,
+      updatedAt: review.updatedAt,
+    };
+  };
+  // 내 전체 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
     const reviews = await this.userReviewsRepository.findAllMyReviewsByuserId(
       userId,
     );
+    reviews.sort((a, b) => {
+      return b.createdAt - a.createdAt;
+    });
     return reviews.map((review) => {
       return {
-        // userId: reviews.userId,
         score: review.score,
         content: review.content,
         createdAt: review.createdAt,

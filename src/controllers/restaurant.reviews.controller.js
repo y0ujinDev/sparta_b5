@@ -1,4 +1,5 @@
 import { RestaurantReviewsService } from '../services/restaurant.reviews.service.js';
+import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
 export class RestaurantReviewsController {
   restaurantReviewsService = new RestaurantReviewsService();
 
@@ -9,8 +10,7 @@ export class RestaurantReviewsController {
       const reviews = await this.restaurantReviewsService.findAllReviews(
         restaurantId,
       );
-      console.log(reviews);
-      return res.status(200).json({ data: reviews });
+      return res.status(StatusCodes.OK).json({ data: reviews });
     } catch (err) {
       next(err);
     }

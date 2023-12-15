@@ -14,9 +14,15 @@ router.post(
   authMiddleware,
   userReviewsController.createReview,
 );
-// 내 리뷰조회
+// 주문번호에 따른 내 리뷰조회
 router.get(
   '/:orderId/reviews',
+  authMiddleware,
+  userReviewsController.getAllMyReviewsByOrderId,
+);
+// 내 전체 리뷰조회
+router.get(
+  '/orderId/reviews/me',
   authMiddleware,
   userReviewsController.getAllMyReviews,
 );
