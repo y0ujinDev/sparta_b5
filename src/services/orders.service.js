@@ -64,13 +64,19 @@ export class OrdersService {
       throw createError(StatusCodes.NOT_FOUND, ErrorMessages.ORDER_NOT_FOUND);
     }
 
-    return order;
+    return order || [];
   };
 
   getAllOrders = async () => {
     const orders = await this.ordersRepository.findAllOrders();
 
-    return orders;
+    return orders || [];
+  };
+
+  getOrdersByUserId = async (userId) => {
+    const orders = await this.ordersRepository.findOrderByUserId(userId);
+
+    return orders || [];
   };
 
   updateOrder = async ({ orderId, deliveryStatus }) => {

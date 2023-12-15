@@ -32,6 +32,8 @@ router.get(
   restaurantOwnerCheck,
   ordersController.handleGetAllOrders,
 );
+// 유저별 주문 조회 API
+router.get('/', needSignin, ordersController.handleGetOrdersByUserId);
 // 주문 상세 조회 API
 router.get(
   '/:restaurantId/:orderId',

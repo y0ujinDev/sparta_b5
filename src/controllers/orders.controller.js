@@ -50,6 +50,20 @@ export class OrdersController {
     }
   };
 
+  handleGetOrdersByUserId = async (req, res, next) => {
+    const { id: userId } = req.user;
+    try {
+      const orders = await this.ordersService.getOrdersByUserId(userId);
+
+      return res.status(StatusCodes.OK).json({
+        message: '주문 내역을 확인하였습니다.',
+        data: orders,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   handleUpdateOrder = async (req, res, next) => {
     const { orderId } = req.params;
     const { deliveryStatus } = req.body;
