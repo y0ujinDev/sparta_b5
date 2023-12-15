@@ -7,6 +7,7 @@ import { CartsRepository } from '../repositories/carts.repository.js';
 import { UsersRepository } from '../repositories/users.repository.js';
 import { RestaurantRepository } from '../repositories/restaurant.repository.js';
 import needSignin from '../middlewares/needSignin.middleware.js';
+import { restaurantOwnerCheck } from '../middlewares/restaurantOwnerCheck.middleware.js';
 
 const router = express.Router();
 
@@ -23,19 +24,31 @@ const ordersService = new OrdersService(
 const ordersController = new OrdersController(ordersService);
 
 // 주문 생성 API
-router.post('/:restaurantId', needSignin, ordersController.handleCreateOrder);
+router.post(
+  '/:restaurantId',
+  needSignin,
+  restaurantOwnerCheck,
+  ordersController.handleCreateOrder,
+);
 // 전체 주문 조회 API
-router.get('/:restaurantId', needSignin, ordersController.handleGetAllOrders);
+router.get(
+  '/:restaurantId',
+  needSignin,
+  restaurantOwnerCheck,
+  ordersController.handleGetAllOrders,
+);
 // 주문 상세 조회 API
 router.get(
   '/:restaurantId/:orderId',
   needSignin,
+  restaurantOwnerCheck,
   ordersController.handleGetOrder,
 );
 // 주문 취소
 router.delete(
   '/:restaurantId/:orderId',
   needSignin,
+  restaurantOwnerCheck,
   ordersController.handleDeleteOrder,
 );
 // 배달 상태 수정 API
