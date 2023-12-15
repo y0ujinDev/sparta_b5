@@ -53,6 +53,7 @@ export const ErrorMessages = deepFreeze({
   CART_ITEM_NOT_FOUND: '장바구니 내 상품을 찾을 수 없습니다.',
   ORDER_NOT_FOUND: '주문을 찾을 수 없습니다.',
   USER_NOT_FOUND: '사용자를 찾을 수 없습니다.',
+  NO_RESTAURANT_ACCESS: '해당 업장에 대한 접근 권한이 없습니다.',
 });
 
 export const TokenInfo = deepFreeze({
