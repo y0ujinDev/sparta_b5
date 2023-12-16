@@ -18,7 +18,7 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="css/getcarts.css" />
-    <!-- <script src="./js/orderlistpage.js" defer></script> -->
+    <script src="./js/getcart.js" defer></script>
   </head>
   <body>
     <div id="navbar">
@@ -45,9 +45,11 @@
           </tr>
         </thead>
         <tbody class="cartList">
-          <tr>
+          <tr id="cartOne">
             <td><h3 id="tableShopName">백종원왕소주</h3></td>
-            <td><h3 id="tableOrderImg">이미지</h3></td>
+            <td>
+              <img src="../resources/codeeats.png" id="tableMenuImg" />
+            </td>
             <td><h3 id="tableOrderMenu">소주</h3></td>
             <td>
               <h3 id="tableOrderContent">달달한 소주</h3>
@@ -55,7 +57,7 @@
             <td><h3 id="tableCount">1</h3></td>
             <td><h3 id="tableTotal">300000</h3></td>
             <td>
-              <h3 id="tableDelete">
+              <h3 id="tableDeleteBtn">
                 <button
                   type="button"
                   class="btn-close"
@@ -66,15 +68,17 @@
           </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-outline-info" id="btn">
-        <i class="fa-solid fa-plus fa-beat-fade"></i> 더 담으러 가기
-      </button>
-      <button type="button" class="btn btn-outline-info" id="btn">
-        주문하기
-      </button>
-      <button type="button" class="btn btn-outline-info" id="btn">
-        비우기
-      </button>
+      <div class="btnlist">
+        <button type="button" class="btn btn-outline-info" id="getMenuBtn">
+          <i class="fa-solid fa-plus fa-beat-fade"></i> 더 담으러 가기
+        </button>
+        <button type="button" class="btn btn-outline-info" id="orderBtn">
+          주문하기
+        </button>
+        <button type="button" class="btn btn-outline-info" id="deleteBtn">
+          전체 비우기
+        </button>
+      </div>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
