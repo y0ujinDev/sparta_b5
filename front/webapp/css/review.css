@@ -1,0 +1,159 @@
+@font-face {
+  font-family: 'KCC-Ganpan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SUITE-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 상단바 */
+#headWrap {
+  display: grid;
+  grid-template-areas: 'logo . icon';
+  grid-template-columns: 1.5fr 5fr 1fr;
+  background-color: white;
+  height: 80px;
+  width: 100%;
+  position: fixed;
+}
+
+.logo {
+  grid-area: logo;
+  padding: 15px 20px;
+}
+
+#codeeatsLogo {
+  width: 222px;
+  height: 42px;
+  cursor: pointer;
+}
+
+.iconBox {
+  grid-area: icon;
+}
+
+#back-button i {
+  color: gray;
+}
+
+#back-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+
+/* 선택 컨테이너 */
+/* 선택 컨테이너 */
+.selectContainer {
+    margin: 90px 4rem 10px auto; /* 위쪽 마진을 상단 헤더의 높이에 맞춰 조정 */
+    width: 200px;
+    height: 40px;
+    border-radius: 4px;
+    border: 2px solid #00b0fb;
+    position: relative; /* 상대 위치 설정 */
+    z-index: 1000; /* 다른 요소들보다 위에 나타나도록 설정 */
+  }
+
+.selectContainer select {
+  width: 95%;
+  height: 100%;
+  background: transparent;
+  border: 0 none;
+  outline: 0 none;
+  padding: 0 5px;
+  position: relative;
+  font-family: 'SUITE-Regular';
+  font-size: 17px;
+}
+
+.selectContainer select option {
+  padding: 3px 0;
+  font-size: 16px;
+  font-family: 'SUITE-Regular';
+}
+
+h1 {
+  font-family: 'KCC-Ganpan';
+  margin-bottom: 25px;
+}
+
+h2 {
+  font-family: 'SUITE-Regular';
+  margin-bottom: 25px;
+}
+p {
+  font-family: 'SUITE-Regular';
+  margin-bottom: 20px;
+}
+/* 메뉴 컨테이너 */
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 각 메뉴 아이템 */
+.menuContainer {
+  background-color: aliceblue;
+  padding: 20px;
+  border-radius: 15px; /* 모서리를 더 둥글게 조정 */
+  margin-bottom: 30px; /* 간격 더욱 넓게 조정 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  max-width: 600px; /* 메뉴의 최대 너비 설정 */
+  width: 100%; /* 최대 너비를 설정하더라도 너비가 100%로 유지되도록 */
+  margin-left: auto; /* 중앙 정렬을 위해 왼쪽 여백 자동 조정 */
+  margin-right: auto; /* 중앙 정렬을 위해 오른쪽 여백 자동 조정 */
+}
+
+.menuContainer:hover {
+  transform: translateY(-8px); /* 호버 시 더 크게 위로 올라가도록 변경 */
+}
+
+/* 메뉴 콘텐츠 */
+.menuContentContainer {
+  margin-bottom: 15px; /* 간격을 조금 더 넓게 설정 */
+}
+
+.menuContentContainer h2 {
+  font-size: 1.3rem; /* 제목 폰트 사이즈 조정 */
+  margin-bottom: 8px; /* 제목과 내용 간격 더 조정 */
+}
+
+.menuContentContainer p {
+  font-size: 1.1rem; /* 내용 폰트 사이즈 조정 */
+  margin-bottom: 10px; /* 간격 더 넓게 조정 */
+}
+
+/* 별점 컨테이너 */
+.scoreContainer {
+  font-size: 1.7rem; /* 별점 크기 키우기 */
+  color: gold;
+}

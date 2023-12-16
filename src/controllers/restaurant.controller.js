@@ -1,9 +1,8 @@
-import { RestaurantService } from '../services/restaurant.service.js';
 import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
 
 export class RestaurantController {
-  constructor() {
-    this.restaurantService = new RestaurantService();
+  constructor(restaurantService) {
+    this.restaurantService = restaurantService;
   }
 
   //업장 생성
@@ -47,8 +46,7 @@ export class RestaurantController {
           message: 'Owner 가 아닌 사용자는 업장을 생성할 수 없습니다.',
         });
       }
-console.log({isOwner})
-console.log({ownerId})
+
       // ownerId로 이미 존재하는 레스토랑이 있는지 확인
       const existingRestaurant = await this.restaurantService.findRestaurantByOwnerId({ownerId});
       console.log({existingRestaurant})

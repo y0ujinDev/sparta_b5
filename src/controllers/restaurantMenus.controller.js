@@ -1,9 +1,8 @@
-import { RestaurantMenusService } from '../services/restaurantMenus.service.js';
 import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
 
 export class RestaurantMenusController {
-  constructor() {
-    this.restaurantMenusService = new RestaurantMenusService();
+  constructor(restaurantMenusService) {
+    this.restaurantMenusService = restaurantMenusService;
   }
 
   //메뉴 생성
@@ -114,7 +113,7 @@ export class RestaurantMenusController {
           message: ErrorMessages.MISSING_CONTENT,
         });
       }
-      
+
       const data = await this.restaurantMenusService.updateOne({
         name,
         price: +price,

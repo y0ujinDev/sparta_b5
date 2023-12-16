@@ -1,9 +1,7 @@
-import { RestaurantMenusRepository } from '../repositories/restaurantMenus.repository.js';
-import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
 
 export class RestaurantMenusService {
-  constructor() {
-    this.restaurantMenusRepository = new RestaurantMenusRepository();
+  constructor(restaurantMenusRepository) {
+    this.restaurantMenusRepository = restaurantMenusRepository;
   }
 
   createOne = async ({  restaurantId, name, price, image, content }) => {

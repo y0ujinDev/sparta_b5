@@ -1,8 +1,10 @@
-import { prisma } from '../utils/prisma/index.js';
-
 export class RestaurantRepository {
+  constructor(prisma){
+    this.prisma = prisma;
+  }
+
   createOne = async ({ name, address, content, category, ownerId }) => {
-    const restaurant = await prisma.restaurants.create({
+    const restaurant = await this.prisma.restaurants.create({
       data: {
         name,
         address,
@@ -15,7 +17,7 @@ export class RestaurantRepository {
   };
 
   findByOwnerId = async ({ ownerId }) => {
-    const restaurantInfo = await prisma.restaurants.findFirst({
+    const restaurantInfo = await this.prisma.restaurants.findFirst({
       where: {
         ownerId: ownerId,
       },
@@ -24,7 +26,7 @@ export class RestaurantRepository {
   };
 
   findById = async (id) => {
-    return await prisma.restaurants.findUnique({
+    return await this.prisma.restaurants.findUnique({
       where: { id: +id },
       select: {
         id: true,
@@ -34,13 +36,13 @@ export class RestaurantRepository {
   };
 
   updateOneById = async (id, { name, address, content, category }) => {
-    const restaurant = await prisma.restaurants.findUnique({ where: { id } });
+    const restaurant = await this.prisma.restaurants.findUnique({ where: { id } });
 
     if (!restaurant) {
       throw new Error('업장 조회에 실패했습니다.');
     }
 
-    const updatedRestaurant = await prisma.restaurants.update({
+    const updatedRestaurant = await this.prisma.restaurants.update({
       where: { id },
       data: {
         ...(name && { name }),
@@ -54,7 +56,7 @@ export class RestaurantRepository {
   };
 
   deleteOneById = async (id) => {
-    const deletedRestaurant = await prisma.restaurants.delete({
+    const deletedRestaurant = await this.prisma.restaurants.delete({
       where: { id },
     });
 
