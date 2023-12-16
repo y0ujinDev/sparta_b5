@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'KCC-Ganpan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.logo {
+  padding: 15px 20px;
+}
+
+#codeeatsLogo {
+  width: 222px;
+  height: 42px;
+  cursor: pointer;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2%;
+  font-family: 'KCC-Ganpan';
+}
+
+.head {
+  background-color: aliceblue;
+}
+
+table {
+  width: 100%;
+  border-top: 1px solid black;
+  font-family: 'KCC-Ganpan';
+}
+#tableOrderContent {
+  margin-left: -20px;
+}
+th,
+td {
+  width: 15%;
+  margin-left: 20px;
+  border-bottom: 1px solid black;
+  padding: 2%;
+  font-family: 'KCC-Ganpan';
+  justify-content: space-around;
+}
+
+#btn {
+  font-family: 'KCC-Ganpan';
+}
