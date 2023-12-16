@@ -3,6 +3,7 @@ import { prisma } from '../utils/prisma/index.js';
 import { AuthController } from '../controllers/auth.controller.js';
 import { AuthService } from '../services/auth.service.js';
 import { UsersRepository } from '../repositories/users.repository.js';
+import needSignin from '../middlewares/needSignin.middleware.js';
 
 const router = express.Router();
 
@@ -18,4 +19,7 @@ router.get('/verifyemail', authController.verifyEmailByToken);
 
 /** 로그인 API **/
 router.post('/signin', authController.signIn);
+
+/** 로그아웃 API **/
+router.delete('/signout', needSignin, authController.signOut);
 export default router;
