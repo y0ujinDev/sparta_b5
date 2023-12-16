@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>reviewPage</title>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="./css/review.css" />
+</head>
+  <body>
+    <div id="wrap">
+      <div id="headWrap">
+        <div class="logo">
+          <img src="../resources/codeeats.png" id="codeeatsLogo" />
+        </div>
+        <div class="iconBox">
+          <button type="button" class="icon" id="back-button">
+            <i class="fas fa-arrow-left"></i> 
+          </button>
+
+
+
+        </div>
+      </div>
+      <div id="bodyWrap">
+        <h1>업장 이름</h1>
+         </div>
+         <form class="formContainer">
+          <div class="selectContainer">
+            <select name="viewMethod" id="restaurantCategory">
+              <option value="manyStars">별점 높은순</option>
+              <option value="lessStars">별점 낮은순</option>
+              <option value="recent">최근 리뷰순</option>
+            </select>
+          </div>
+
+    <div class="menu">
+      <div class="menuContainer">        
+        <div class="menuContentContainer">
+          <h2>닉네임: 맛있으면 우는 까마귀</h2>
+          <p>리뷰 내용: 꺄아아아아아악</p>
+          <p>메뉴: 마제소바, 차슈덮밥</p>
+        </div>
+        <div class = "scoreContainer">
+            <p>⭐⭐⭐⭐⭐</p>
+           </div>
+      </div>
+
+
+      <div class="menuContainer">
+        <div class="menuContentContainer">
+            <h2>닉네임: 맛있으면 우는 까마귀</h2>
+            <p>리뷰 내용: 꺄아아아아아악</p>
+            <p>메뉴: 마제소바, 차슈덮밥</p>
+        </div>
+        <div class = "scoreContainer">
+        <p>⭐⭐⭐⭐⭐</p>
+       </div>
+      </div>
+      <!-- 다른 메뉴들도 유사한 구조로 추가 가능 -->
+    </div>
+    <script src="./script/menu.js"></script>
+  </body>
+</html>
