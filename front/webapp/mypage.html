@@ -1,85 +1,77 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mypage</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="css/mypage.css" />
-  </head>
-  <body>
-    <div id="wrap">
-      <div id="headWrap">
-        <div class="logo">
-          <img src="../resources/codeeats.png" id="codeeatsLogo" />
-        </div>
-        <div class="iconBox">
-          <button type="button" onclick="logout()" class="icon" id="logout">
-            <i class="fas fa-solid fa-right-to-bracket"></i>
-          </button>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mypage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="css/mypage.css" />
+  <script src='./js/mypage.js' defer></script>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="headWrap">
+      <div class="logo">
+        <img src="../resources/codeeats.png" id="codeeatsLogo" onclick="toHome()" />
       </div>
-      <div id="bodyWrap">
-        <h2>프로필</h2>
-        <div class="profileContainer">
-          <form class="formBox">
-            <div class="isOwnerBox">
-              <label id="isOwner"
-                ><input type="radio" name="isOwner" value="true" checked />
-                사장
-              </label>
-              <label id="isCustomer"
-                ><input type="radio" name="isOwner" value="false" />
-                고객
-              </label>
-            </div>
-            <label class="nicknameTitle"> 닉네임</label>
-            <div class="nicknameBox">
-              <!-- 여기 value값 백 연결할때 자기닉네임값 가져오기 -->
-              <input
-                type="text"
-                id="nickname"
-                value="맛있으면 우는 까마귀"
-                required=""
-                max="20"
-              />
-            </div>
-            <button class="submitBtn" type="button">수정</button>
-            <label class="emailTitle">E-mail</label>
-            <div class="email">testemail@naver.com</div>
-          </form>
+      <div class="iconBox">
+        <button type="button" onclick="logout()" class="icon" id="logout">
+          <i class="fas fa-solid fa-right-to-bracket"></i>
+        </button>
+      </div>
+    </div>
+    <div id="bodyWrap">
+      <h2>프로필</h2>
+      <div class="profileContainer">
+        <form class="formBox">
+          <div class="isOwnerBox">
+            <label id="isOwner"><input type="radio" name="isOwner" value="true" checked />
+              사장
+            </label>
+            <label id="isCustomer"><input type="radio" name="isOwner" value="false" />
+              고객
+            </label>
+          </div>
+          <label class="nicknameTitle"> 닉네임</label>
+          <div class="nicknameBox">
+            <!-- 여기 value값 백 연결할때 자기닉네임값 가져오기 -->
+            <input type="text" id="nickname" value="맛있으면 우는 까마귀" required="" max="20" />
+          </div>
+          <button class="submitBtn" type="button">수정</button>
+          <label class="emailTitle">E-mail</label>
+          <div class="email">testemail@naver.com</div>
+        </form>
+      </div>
+      <div class="myContainer">
+        <div class="pointContainer">
+          <div class="pointBox">
+            <h3 class="pointText">잔여 포인트</h3>
+            <div class="point">1,000,000 P</div>
+          </div>
         </div>
-        <div class="myContainer">
-          <div class="pointContainer">
-            <div class="pointBox">
-              <h3 class="pointText">잔여 포인트</h3>
-              <div class="point">1,000,000 P</div>
+        <div class="reviewNorderContainer">
+          <div class="reviewContainer">
+            <div class="reviewTitle">내가 작성한 리뷰 :</div>
+            <div class="reviewCount">15 개</div>
+            <div class="reviews">
+              <button id="reviewReadBtn" type="button">리뷰 내역 보기</button>
             </div>
           </div>
-          <div class="reviewNorderContainer">
-            <div class="reviewContainer">
-              <div class="reviewTitle">내가 작성한 리뷰 :</div>
-              <div class="reviewCount">15 개</div>
-              <div class="reviews">
-                <button id="reviewReadBtn" type="button">리뷰 내역 보기</button>
-              </div>
-            </div>
-            <div class="orderContainer">
-              <div class="orderTitle">내가 주문한 횟수 :</div>
-              <div class="orderCount">28 번</div>
-              <div class="orders">
-                <button id="orderReadBtn" type="button">주문 내역 보기</button>
-              </div>
+          <div class="orderContainer">
+            <div class="orderTitle">내가 주문한 횟수 :</div>
+            <div class="orderCount">28 번</div>
+            <div class="orders">
+              <button id="orderReadBtn" type="button">주문 내역 보기</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
