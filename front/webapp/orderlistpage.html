@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>주문 페이지</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/orderlistpage.css" />
+    <script src="./js/orderlistpage.js" defer></script>
+  </head>
+  <body>
+    <div id="navbar">
+      <div class="logo">
+        <img src="../resources/codeeats.png" id="codeeatsLogo" />
+      </div>
+    </div>
+    <div class="title">
+      <h1>주문 현황 <i class="fa-solid fa-cart-shopping"></i></h1>
+    </div>
+    <div>
+      <div class="navbar">
+        <h2 id="status">배달 상태</h2>
+        <h2 id="orderNumber">주문번호</h2>
+        <h2 id="orderNickname">닉네임</h2>
+        <h2 id="orderMenu">메뉴정보</h2>
+        <h2 id="count">수량</h2>
+        <h2 id="total">금액</h2>
+      </div>
+      <table>
+        <tbody class="orderList">
+          <th>
+            <h3 class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                onclick="getstatus()"
+              />
+              <label class="form-check-label" id="orderstatus">
+                주문완료
+              </label>
+            </h3>
+          </th>
+          <th><h3 id="tableOrderNumber">1</h3></th>
+          <th><h3 id="tableOrderNickname">테스트</h3></th>
+          <th><h3 id="tableOrderMenu">소주</h3></th>
+          <th><h3 id="tableCount">1</h3></th>
+          <th><h3 id="tableTotal">300000</h3></th>
+        </tbody>
+      </table>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
