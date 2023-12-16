@@ -166,7 +166,7 @@ textarea:focus {
   margin: 10px auto;
   text-align: center;
   border: solid 2px #00b0fb;
-  border-radius: 5px;
+  border-radius: 30px;
   font-size: 1.1rem;
   color: black;
   width: 150px;

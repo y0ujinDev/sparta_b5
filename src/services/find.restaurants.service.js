@@ -4,9 +4,8 @@ export class FindRestaurantsService {
 
   // 음식점 검색 기능
   findAllRestaurants = async (encodeCategory) => {
-    const restaurants = await this.findRestaurantsRepository.findAllRestaurants(
-      encodeCategory,
-    );
+    const restaurants =
+      await this.findRestaurantsRepository.findAllRestaurants(encodeCategory);
 
     return restaurants.map((restaurant) => {
       return {
