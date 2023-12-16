@@ -17,6 +17,12 @@ export class RestaurantService {
     return restaurant;
   };
 
+  findById = async (id) => {
+    const restaurant = await this.restaurantRepository.findById(id);
+
+    return restaurant;
+  };
+
   findRestaurantByOwnerId = async ({ ownerId }) => {
     const restaurantInfo = await this.restaurantRepository.findByOwnerId({
       ownerId,

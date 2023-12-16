@@ -26,4 +26,20 @@ export class UserService {
     );
     return updatedUser;
   };
+
+  // 포인트 관련 로직
+  deductPoints = async (userId, points) => {
+    const updatePoints = await this.usersRepository.deductPoints(
+      userId,
+      points,
+    );
+
+    return updatePoints;
+  };
+
+  addPoints = async (userId, points) => {
+    const updatePoints = await this.usersRepository.addPoints(userId, points);
+
+    return updatePoints;
+  };
 }
