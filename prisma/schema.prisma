@@ -1,11 +1,121 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  id            Int          @id @default(autoincrement())
+  email         String       @unique
+  password      String
+  nickname      String
+  point         Int          @default(1000000)
+  isOwner       Boolean      @default(false) @map("is_owner")
+  emailVerified Boolean      @default(false) @map("email_verified")
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  carts         Carts[]
+  orders        Orders[]
+  restaurant    Restaurants?
+  reviews       Reviews[]
+
+  @@map("Users")
+}
+
+model Reviews {
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  orderId      Int         @unique @map("order_id")
+  restaurantId Int         @map("restaurant_id")
+  score        Int
+  content      String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  order        Orders      @relation(fields: [orderId], references: [id])
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  user         Users       @relation(fields: [userId], references: [id])
+
+  @@index([restaurantId], map: "Reviews_restaurant_id_fkey")
+  @@index([userId], map: "Reviews_user_id_fkey")
+  @@map("Reviews")
+}
+
+model Restaurants {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  content   String
+  category  String
+  ownerId   Int       @unique @map("owner_id")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  carts     Carts[]
+  orders    Orders[]
+  owner     Users     @relation(fields: [ownerId], references: [id])
+  reviews   Reviews[]
+  menus     Menus[]
+
+  @@map("Restaurants")
+}
+
+model Orders {
+  id             Int         @id @default(autoincrement())
+  total          Int
+  deliveryStatus String      @default("ORDERED") @map("delivery_status")
+  userId         Int         @map("user_id")
+  restaurantId   Int         @map("restaurant_id")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  restaurant     Restaurants @relation(fields: [restaurantId], references: [id])
+  user           Users       @relation(fields: [userId], references: [id])
+  review         Reviews?
+
+  @@index([restaurantId], map: "Orders_restaurant_id_fkey")
+  @@index([userId], map: "Orders_user_id_fkey")
+  @@map("Orders")
+}
+
+model Menus {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Int
+  image        String
+  content      String
+  restaurantId Int         @map("restaurant_id")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  cartItems    CartItems[]
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId], map: "menus_restaurant_id_fkey")
+  @@map("menus")
+}
+
+model Carts {
+  id           Int         @id @default(autoincrement())
+  userId       Int         @map("user_id")
+  restaurantId Int         @map("restaurant_id")
+  cartItems    CartItems[]
+  restaurant   Restaurants @relation(fields: [restaurantId], references: [id])
+  user         Users       @relation(fields: [userId], references: [id])
+
+  @@index([restaurantId], map: "Carts_restaurant_id_fkey")
+  @@index([userId], map: "Carts_user_id_fkey")
+  @@map("Carts")
+}
+
+model CartItems {
+  id       Int   @id @default(autoincrement())
+  cartId   Int   @map("cart_id")
+  menuId   Int   @map("menu_id")
+  quantity Int
+  cart     Carts @relation(fields: [cartId], references: [id])
+  menu     Menus @relation(fields: [menuId], references: [id])
+
+  @@index([cartId], map: "Cart_items_cart_id_fkey")
+  @@index([menuId], map: "Cart_items_menu_id_fkey")
+  @@map("Cart_items")
 }

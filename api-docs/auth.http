@@ -1,0 +1,22 @@
+@host = http://localhost:3000/api/
+
+### 회원가입
+POST {{host}}/signup
+Content-Type: application/json
+
+{
+   "email": "qlrmf1995@naver.com",
+   "nickname": "tester",
+   "password": "123456",
+   "confirmPassword": "123456",
+   "isOwner": false
+}
+
+### 로그인
+POST {{host}}/signin
+Content-Type: application/json
+
+{
+	"email":"alslvls1995@naver.com",
+	"password":"123456"
+}

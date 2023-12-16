@@ -1,0 +1,33 @@
+@host = http://localhost:3000/api/restaurants/
+
+### 업장 생성
+POST {{host}}
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
+
+{
+    "name":"연어초밥왕",
+    "address": "경기도 하남시 어쩌구 어쩌동 109호",
+    "content": "운영시간 09:00 ~ 18:00",
+    "category": "일식"
+}
+
+
+
+
+
+### 업장 수정 
+PUT {{host}}/6
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
+
+{
+    "name":"백종원왕소주2",
+    "address": "경기도 하남시 어쩌구 어쩌동 109호",
+    "content": "운영시간 09:00 ~ 18:00",
+    "category": "한식"
+}
+### 업장 삭제 -- 개발완료
+DELETE {{host}}/3
+Content-Type: application/json
+# Authorization: Bearer {{accessToken}}
