@@ -18,6 +18,7 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="css/myreviewpage.css" />
+    <script src="./js/myreviewpage.html" defer></script>
   </head>
   <body>
     <div id="navbar">
@@ -28,7 +29,7 @@
     <div class="title">
       <h1>내 리뷰 내역 <i class="fa-solid fa-pen"></i></h1>
     </div>
-    <div class="review-list">
+    <div class="review-list" id="reviewList">
       <div class="review">
         <div class="card border">
           <h5 class="card-header" id="title">오늘은 피자왕</h5>
@@ -45,7 +46,7 @@
             >
               수정
             </button>
-            <button type="button" class="btn btn-outline-info" id="delete">
+            <button type="button" class="btn btn-outline-info" id="deleteBtn">
               삭제
             </button>
           </div>

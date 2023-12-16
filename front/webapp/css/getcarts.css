@@ -47,8 +47,10 @@ table {
   border-top: 1px solid black;
   font-family: 'KCC-Ganpan';
 }
-#tableOrderContent {
-  margin-left: -20px;
+#tableMenuImg {
+  width: 200px;
+  height: 200px;
+  object-fit: fill;
 }
 th,
 td {
@@ -58,4 +60,15 @@ td {
   padding: 2%;
   font-family: 'KCC-Ganpan';
   justify-content: space-around;
+}
+.btnlist {
+  text-align: center;
+  margin-top: 2%;
+  font-family: 'KCC-Ganpan';
+}
+#getMenuBtn {
+  margin-right: 3%;
+}
+#orderBtn {
+  margin-right: 3%;
 }
