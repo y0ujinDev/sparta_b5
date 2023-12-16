@@ -116,4 +116,16 @@ export class AuthController {
       next(err);
     }
   };
+
+  //로그아웃
+  signOut = async (req, res, next) => {
+    try {
+      res.clearCookie('sessionKey', { path: '/' });
+      return res.status(StatusCodes.OK).json({
+        message: '로그아웃에 성공했습니다.',
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }

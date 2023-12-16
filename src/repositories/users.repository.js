@@ -1,3 +1,5 @@
+// import { pick } from 'lodash';
+
 export class UsersRepository {
   constructor(prisma) {
     this.prisma = prisma;
@@ -25,6 +27,29 @@ export class UsersRepository {
       where: { email },
     });
     return exituser;
+  };
+
+  //user Id로 회원조회
+  FindUserbyId = async (userId) => {
+    const user = await this.prisma.users.findFirst({
+      where: { id: userId },
+      include: { reviews: true, orders: true },
+    });
+    return user;
+  };
+
+  //회원 정보 수정
+  updateUser = async (userId, nickname, isOwner) => {
+    const updateduser = await this.prisma.users.update({
+      where: {
+        id: +userId,
+      },
+      data: {
+        nickname,
+        isOwner,
+      },
+    });
+    return updateduser;
   };
 
   // 포인트 관련 로직
