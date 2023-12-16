@@ -38,43 +38,24 @@
   font-family: 'KCC-Ganpan';
 }
 
-.navbar {
+.head {
   background-color: aliceblue;
-  /* justify-content: space-around; */
 }
-#status {
-  margin-left: 5%;
-  font-family: 'KCC-Ganpan';
-}
-#orderNumber {
-  margin-left: -11%;
-  margin-right: 5%;
-  font-family: 'KCC-Ganpan';
-}
-#orderNickname {
-  margin-left: -8%;
-  font-family: 'KCC-Ganpan';
-}
-#orderMenu {
-  margin-left: -6%;
-  font-family: 'KCC-Ganpan';
-}
-#count {
-  margin-left: -6%;
-  font-family: 'KCC-Ganpan';
-}
-#total {
-  margin-right: 3%;
-  font-family: 'KCC-Ganpan';
-}
+
 table {
   width: 100%;
   border-top: 1px solid black;
+  font-family: 'KCC-Ganpan';
 }
-th {
-  width: 18%;
+#tableOrderContent {
+  margin-left: -20px;
+}
+th,
+td {
+  width: 15%;
   margin-left: 20px;
   border-bottom: 1px solid black;
-  padding: 3%;
+  padding: 2%;
   font-family: 'KCC-Ganpan';
+  justify-content: space-around;
 }
