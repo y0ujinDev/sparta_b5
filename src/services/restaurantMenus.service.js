@@ -1,4 +1,3 @@
-
 export class RestaurantMenusService {
   constructor(restaurantMenusRepository) {
     this.restaurantMenusRepository = restaurantMenusRepository;
@@ -16,10 +15,20 @@ export class RestaurantMenusService {
     return { ...menu };
   };
 
-  readMany = async ({ sort }) => {
-    const menus = await this.restaurantMenusRepository.readMany({ sort });
-
-    return menus;
+  readMany = async ( {sort, restaurantId} ) => {
+    
+    const menus = await this.restaurantMenusRepository.readMany({ sort, restaurantId });
+    console.log('sort', sort)
+    return menus.map((menu) => {
+      return {
+        name: menu.name,
+        price: menu.price,
+        content: menu.content,
+        createdAt: menu.createdAt,
+        updatedAt: menu.updatedAt,
+      };
+    });
+    
   };
 
   updateOne = async ({ id, name, price, image, content }) => {
