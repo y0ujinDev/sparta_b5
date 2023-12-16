@@ -8,6 +8,7 @@ export class FindRestaurantsRepository {
           contains: decodeURI(encodeCategory),
         },
       },
+      include: { menus: true, reviews: true },
     });
     return foundAllRestaurants;
   };
