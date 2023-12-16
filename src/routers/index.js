@@ -1,4 +1,5 @@
 import express from 'express';
+import UsersRouter from './user.router.js';
 import OrdersRouter from './orders.router.js';
 import ReviewsRouter from './reviews.router.js';
 import AuthRouter from './auth.router.js';
@@ -10,6 +11,7 @@ import FindRestaurantRouter from './find.restaurants.router.js';
 const router = express.Router();
 
 router.use('/', AuthRouter);
+router.use('/users', UsersRouter);
 router.use('/orders', OrdersRouter);
 router.use('/carts', cartsRouter);
 router.use('/orders', ReviewsRouter);
