@@ -5,8 +5,10 @@ export class CartsRepository {
 
   createCart = async ({ userId, restaurantId }) => {
     const cart = await this.prisma.carts.create({
-      userId,
-      restaurantId: +restaurantId,
+      data: {
+        userId,
+        restaurantId: +restaurantId,
+      },
     });
 
     return cart;

@@ -1,0 +1,160 @@
+@font-face {
+  font-family: 'KCC-Ganpan';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCC-Ganpan.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* 상단바 부분 */
+#headWrap {
+  display: grid;
+  grid-template-areas: '. icon';
+  grid-template-columns: 7fr 1fr;
+  background-color: white;
+  height: 80px;
+  width: 100%;
+  position: fixed;
+}
+
+.iconBox {
+  grid-area: icon;
+}
+
+#restaurant i,
+#user i {
+  color: gray;
+}
+
+#restaurant,
+#user {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#restaurant {
+  position: absolute;
+  top: 15px;
+  right: 70px;
+}
+
+#user {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+/* 전체 컨테이너 */
+#bodyWrap {
+  padding-top: 150px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.logo {
+  width: 255px;
+  margin: 10px auto 20px;
+}
+
+#codeeatsLogo {
+  width: 254px;
+  height: 48px;
+  cursor: pointer;
+}
+
+/* 검색창 */
+#searchBox {
+  width: 800px;
+  margin: 0 auto;
+}
+
+fieldset {
+  display: flex;
+  padding: 0 0 0 40px;
+  background: #fff;
+  border: none;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 40px;
+  width: 750px;
+}
+
+input,
+#searchBtn {
+  position: relative;
+  width: 700px;
+  height: 50px;
+  padding: 0;
+  float: left;
+}
+
+input {
+  color: #666;
+  border: 0 none;
+  font-size: 1.2rem;
+  font-family: 'KCC-Ganpan';
+}
+
+input:focus {
+  outline: 0 none;
+}
+
+#searchBtn {
+  width: 50px;
+  border: 0 none;
+  cursor: pointer;
+  border-radius: 0 40px 40px 0;
+}
+
+.fa-search {
+  font-size: 1.4rem;
+  color: #29abe2;
+  top: 25%;
+}
+
+/* 메뉴 카테고리 */
+#categoryBox {
+  margin-top: 70px;
+  display: grid;
+  grid-template-areas:
+    'koreanFood chicken tteokbokki sushi pork soup pizza'
+    'chineseFood spaguetti dessert asian burger mexicanFood others';
+  grid-template-rows: 1.2fr 1fr;
+}
+
+#categoryBox div {
+  position: relative;
+  width: 170px;
+  height: 200px;
+  text-align: center;
+}
+
+#categoryBox div img {
+  width: 150px;
+  height: 150px;
+  margin: 0px 10px 10px;
+  cursor: pointer;
+}
+
+#categoryBox div label {
+  padding: 5px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-family: 'KCC-Ganpan';
+  bottom: 0px;
+}

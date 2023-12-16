@@ -17,19 +17,20 @@ export class CartsService {
 
   // 장바구니 조회
   getCart = async ({ userId, restaurantId }) => {
-    const cart = await this.cartsRepository.getCartById({
+    let cart = await this.cartsRepository.getCartById({
       userId,
       restaurantId,
     });
     if (!cart) {
       cart = await this.cartsRepository.createCart({ userId, restaurantId });
     }
-    return cart
+
+    return cart;
   };
 
   // 장바구니 메뉴 추가
   addMenu = async ({ userId, restaurantId, menuId }) => {
-    const cart = await this.cartsRepository.getCartById({
+    let cart = await this.cartsRepository.getCartById({
       userId,
       restaurantId,
     });
