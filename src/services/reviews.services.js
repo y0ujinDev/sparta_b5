@@ -4,20 +4,23 @@ export class ReviewsService {
   }
 
   // 리뷰 생성
-  createReview = async ({ userId, restaurantId, orderId, score, content }) => {
-    const createdReview = await this.reviewsRepository.createReview({
+  findAllMyReviewsByuserId = async (userId) => {
+    const reviews = await this.reviewsRepository.findAllMyReviewsByuserId(
       userId,
-      restaurantId,
-      orderId,
-      score,
-      content,
+    );
+    reviews.sort((a, b) => {
+      return b.createdAt - a.createdAt;
     });
-
-    return {
-      reviewId: createdReview.reviewId,
-      score: createdReview.score,
-      content: createdReview.content,
-    };
+    return reviews.map((review) => {
+      return {
+        reviewId: review.id,
+        title: review.restaurant.name,
+        score: review.score,
+        content: review.content,
+        createdAt: review.createdAt,
+        updatedAt: review.updatedAt,
+      };
+    });
   };
   // 내 전체 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
@@ -29,6 +32,7 @@ export class ReviewsService {
     });
     return reviews.map((review) => {
       return {
+        reviewId: review.id,
         score: review.score,
         content: review.content,
         createdAt: review.createdAt,
@@ -43,7 +47,7 @@ export class ReviewsService {
     await this.reviewsRepository.updateReview(userId, reviewId, score, content);
     const updatedReview = await this.reviewsRepository.findByReviewId(reviewId);
     return {
-      reviewId: updatedReview.reviewId,
+      reviewId: updatedReview.id,
       score: updatedReview.score,
       content: updatedReview.content,
       createdAt: updatedReview.createdAt,
@@ -56,7 +60,7 @@ export class ReviewsService {
     if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.reviewsRepository.deleteReview(reviewId, userId);
     return {
-      reviewId: review.reviewId,
+      reviewId: review.id,
       content: review.content,
       score: review.score,
       createdAt: review.createdAt,

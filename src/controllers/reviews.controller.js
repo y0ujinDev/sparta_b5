@@ -40,23 +40,6 @@ export class ReviewsController {
       next(err);
     }
   };
-  // 주문번호에 따른 내 리뷰조회
-  getAllMyReviewsByOrderId = async (req, res, next) => {
-    try {
-      const userId = req.user.id;
-      const { orderId } = req.params;
-      console.log('----------orderId', orderId);
-      const reviews =
-        await this.reviewsService.findAllMyReviewsByuserIdAndOrderId(
-          userId,
-          orderId,
-        );
-
-      return res.status(StatusCodes.OK).json({ data: reviews });
-    } catch (err) {
-      next(err);
-    }
-  };
   // 내 전체 리뷰조회
   getAllMyReviews = async (req, res, next) => {
     try {
@@ -64,7 +47,6 @@ export class ReviewsController {
       const reviews = await this.reviewsService.findAllMyReviewsByuserId(
         userId,
       );
-
       return res.status(StatusCodes.OK).json({ data: reviews });
     } catch (err) {
       next(err);
