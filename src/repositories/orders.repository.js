@@ -37,16 +37,9 @@ export class OrdersRepository {
   };
 
   findOrderByUserId = async (userId) => {
-    return await this.prisma.carts.findMany({
+    return await this.prisma.orders.findMany({
       where: {
         userId: +userId,
-      },
-      include: {
-        cartItems: {
-          include: {
-            menu: true,
-          },
-        },
       },
     });
   };
