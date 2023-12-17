@@ -4,6 +4,21 @@ export class ReviewsService {
   }
 
   // 리뷰 생성
+  createReview = async ({ userId, restaurantId, orderId, score, content }) => {
+    const createdReview = await this.reviewsRepository.createReview({
+      userId,
+      restaurantId,
+      orderId,
+      score,
+      content,
+    });
+
+    return {
+      reviewId: createdReview.reviewId,
+      score: createdReview.score,
+      content: createdReview.content,
+    };
+  };
   findAllMyReviewsByuserId = async (userId) => {
     const reviews = await this.reviewsRepository.findAllMyReviewsByuserId(
       userId,
