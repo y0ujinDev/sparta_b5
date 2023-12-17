@@ -17,6 +17,8 @@ export class ReviewsService {
       reviewId: createdReview.id,
       score: createdReview.score,
       content: createdReview.content,
+      createdAt: createdReview.createdAt,
+      updatedAt: createdReview.updatedAt,
     };
   };
   // 내 전체 리뷰조회
