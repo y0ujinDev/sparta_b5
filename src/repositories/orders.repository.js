@@ -51,7 +51,7 @@ export class OrdersRepository {
     });
   };
 
-  findAllOrders = async () => {
+  findAllOrders = async (restaurantId) => {
     return await this.prisma.orders.findMany({
       where: {
         restaurantId: +restaurantId,
