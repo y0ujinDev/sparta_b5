@@ -59,8 +59,8 @@ export class OrdersService {
     return order || [];
   };
 
-  getAllOrders = async () => {
-    const orders = await this.ordersRepository.findAllOrders();
+  getAllOrders = async (restaurantId) => {
+    const orders = await this.ordersRepository.findAllOrders(restaurantId);
 
     return orders || [];
   };

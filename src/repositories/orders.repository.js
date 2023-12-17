@@ -52,7 +52,11 @@ export class OrdersRepository {
   };
 
   findAllOrders = async () => {
-    return await this.prisma.orders.findMany();
+    return await this.prisma.orders.findMany({
+      where: {
+        restaurantId: +restaurantId,
+      },
+    });
   };
 
   updateOrder = async ({ orderId, deliveryStatus }) => {
