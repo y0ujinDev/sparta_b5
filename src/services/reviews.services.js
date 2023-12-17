@@ -15,7 +15,6 @@ export class ReviewsService {
 
     return {
       reviewId: createdReview.id,
-      reviewId: createdReview.reviewId,
       score: createdReview.score,
       content: createdReview.content,
     };
