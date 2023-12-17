@@ -30,6 +30,7 @@ export class ReviewsService {
     return reviews.map((review) => {
       return {
         reviewId: review.id,
+        title: review.restaurant.name,
         score: review.score,
         content: review.content,
         createdAt: review.createdAt,
