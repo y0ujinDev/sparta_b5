@@ -19,24 +19,6 @@ export class ReviewsService {
       content: createdReview.content,
     };
   };
-  findAllMyReviewsByuserId = async (userId) => {
-    const reviews = await this.reviewsRepository.findAllMyReviewsByuserId(
-      userId,
-    );
-    reviews.sort((a, b) => {
-      return b.createdAt - a.createdAt;
-    });
-    return reviews.map((review) => {
-      return {
-        reviewId: review.id,
-        title: review.restaurant.name,
-        score: review.score,
-        content: review.content,
-        createdAt: review.createdAt,
-        updatedAt: review.updatedAt,
-      };
-    });
-  };
   // 내 전체 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
     const reviews = await this.reviewsRepository.findAllMyReviewsByuserId(
