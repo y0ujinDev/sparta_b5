@@ -19,7 +19,10 @@ const usersService = new UserService(new UsersRepository(prisma));
 const restaurantService = new RestaurantService(
   new RestaurantRepository(prisma),
 );
-const ordersRepository = new OrdersRepository(prisma, new CartsRepository());
+const ordersRepository = new OrdersRepository(
+  prisma,
+  new CartsRepository(prisma),
+);
 const ordersService = new OrdersService(
   ordersRepository,
   cartsService,
