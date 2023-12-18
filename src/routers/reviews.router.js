@@ -27,7 +27,7 @@ router.put(
   reviewsController.updateReview,
 );
 // 리뷰삭제
-router.patch(
+router.delete(
   '/:orderId/reviews/:reviewId',
   needSignin,
   reviewsController.deleteReview,
