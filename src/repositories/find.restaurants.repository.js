@@ -10,7 +10,7 @@ export class FindRestaurantsRepository {
           contains: decodeURI(encodeCategory),
         },
       },
-      include: { menus: true, reviews: true },
+      include: { reviews: true },
     });
     return foundAllRestaurants;
   };

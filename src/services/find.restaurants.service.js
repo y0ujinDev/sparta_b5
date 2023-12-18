@@ -8,7 +8,6 @@ export class FindRestaurantsService {
       await this.findRestaurantsRepository.findAllRestaurants(encodeCategory);
 
     return restaurants.map((restaurant) => {
-      console.log(restaurant.menus[0].image);
       const reviewList = [];
       restaurant.reviews.map((review) => {
         reviewList.push(review.score);
@@ -16,7 +15,6 @@ export class FindRestaurantsService {
       return {
         name: restaurant.name,
         category: restaurant.category,
-        image: restaurant.menus[0].image,
         score: reviewList,
       };
     });
