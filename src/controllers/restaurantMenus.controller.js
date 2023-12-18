@@ -62,6 +62,8 @@ export class RestaurantMenusController {
   readMany = async (req, res, next) => {
     try {
       const { sort } = req.query;
+      const { restaurantId } = req.params;
+      console.log('sort', sort)
       let upperCaseSort = sort?.toUpperCase();
 
       if (upperCaseSort !== 'ASC' && upperCaseSort !== 'DESC') {
@@ -70,17 +72,21 @@ export class RestaurantMenusController {
 
       const data = await this.restaurantMenusService.readMany({
         sort: upperCaseSort,
+        restaurantId, 
       });
+
       console.log('data', data);
       return res.status(StatusCodes.OK).json({
         success: true,
-        message: '메뉴 조회에 성공했습니다.',
+        message: '메뉴 전체 조회에 성공했습니다.',
         data,
       });
     } catch (error) {
       next(error);
     }
   };
+
+
 
   //메뉴 수정
   updateOne = async (req, res, next) => {
