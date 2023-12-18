@@ -6,20 +6,25 @@ import { OrdersRepository } from '../repositories/orders.repository.js';
 import { CartsRepository } from '../repositories/carts.repository.js';
 import { UsersRepository } from '../repositories/users.repository.js';
 import { RestaurantRepository } from '../repositories/restaurant.repository.js';
+import { CartsService } from '../services/carts.service.js';
+import { UserService } from '../services/user.service.js';
+import { RestaurantService } from '../services/restaurant.service.js';
 import needSignin from '../middlewares/needSignin.middleware.js';
 import { restaurantOwnerCheck } from '../middlewares/restaurantOwnerCheck.middleware.js';
 
 const router = express.Router();
 
-const cartsRepository = new CartsRepository(prisma);
-const usersRepository = new UsersRepository(prisma);
-const restaurantRepository = new RestaurantRepository(prisma);
-const ordersRepository = new OrdersRepository(prisma, cartsRepository);
+const cartsService = new CartsService(new CartsRepository(prisma));
+const usersService = new UserService(new UsersRepository(prisma));
+const restaurantService = new RestaurantService(
+  new RestaurantRepository(prisma),
+);
+const ordersRepository = new OrdersRepository(prisma, new CartsRepository());
 const ordersService = new OrdersService(
   ordersRepository,
-  cartsRepository,
-  usersRepository,
-  restaurantRepository,
+  cartsService,
+  usersService,
+  restaurantService,
 );
 const ordersController = new OrdersController(ordersService);
 

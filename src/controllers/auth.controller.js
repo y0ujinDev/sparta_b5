@@ -59,6 +59,7 @@ export class AuthController {
       }
       await this.authService.sendVerifyEmail(email);
       return res.status(StatusCodes.CREATED).json({
+        success: true,
         message:
           '인증메일이 발송되었습니다. 로그인을 위해 인증을 완료해주세요.',
       });
@@ -111,7 +112,21 @@ export class AuthController {
       req.session[uniqueInt] = `Bearer ${token}`;
       // console.log(req.session[uniqueInt]);
       res.cookie('sessionKey', uniqueInt);
-      return res.status(StatusCodes.OK).json({ message: '로그인 성공' });
+      return res
+        .status(StatusCodes.OK)
+        .json({ success: true, message: '로그인 성공' });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  //로그아웃
+  signOut = async (req, res, next) => {
+    try {
+      res.clearCookie('sessionKey', { path: '/' });
+      return res.status(StatusCodes.OK).json({
+        message: '로그아웃에 성공했습니다.',
+      });
     } catch (err) {
       next(err);
     }

@@ -6,16 +6,11 @@ import {
 } from './../utils/constants/constants.js';
 
 export class OrdersService {
-  constructor(
-    ordersRepository,
-    cartsRepository,
-    usersRepository,
-    restaurantRepository,
-  ) {
+  constructor(ordersRepository, cartsService, userService, restaurantService) {
     this.ordersRepository = ordersRepository;
-    this.cartsRepository = cartsRepository;
-    this.usersRepository = usersRepository;
-    this.restaurantRepository = restaurantRepository;
+    this.cartsService = cartsService;
+    this.userService = userService;
+    this.restaurantService = restaurantService;
   }
 
   createOrder = async ({ userId, restaurantId }) => {
@@ -24,20 +19,17 @@ export class OrdersService {
       restaurantId,
     });
 
-    const cart = await this.cartsRepository.getCartById({
-      userId,
-      restaurantId,
-    });
+    const cart = await this.cartsService.getCart({ userId, restaurantId });
 
     if (!cart || !cart.cartItems.length) {
       throw createError(StatusCodes.NOT_FOUND, ErrorMessages.CART_NOT_FOUND);
     }
 
     // 주문 생성 시 장바구니 초기화
-    await this.cartsRepository.clearCart({ userId, restaurantId });
+    await this.cartsService.clearCart({ userId, restaurantId });
 
     // 포인트 관련 로직
-    const restaurant = await this.restaurantRepository.findById(restaurantId);
+    const restaurant = await this.restaurantService.findById(restaurantId);
 
     if (!restaurant) {
       throw createError(
@@ -51,8 +43,8 @@ export class OrdersService {
       0,
     );
 
-    await this.usersRepository.deductPoints(userId, totalPoints);
-    await this.usersRepository.addPoints(restaurant.ownerId, totalPoints);
+    await this.userService.deductPoints(userId, totalPoints);
+    await this.userService.addPoints(restaurant.ownerId, totalPoints);
 
     return order || [];
   };
@@ -67,8 +59,8 @@ export class OrdersService {
     return order || [];
   };
 
-  getAllOrders = async () => {
-    const orders = await this.ordersRepository.findAllOrders();
+  getAllOrders = async (restaurantId) => {
+    const orders = await this.ordersRepository.findAllOrders(restaurantId);
 
     return orders || [];
   };

@@ -1,7 +1,9 @@
-import { UserReviewsService } from '../services/user.reviews.services.js';
 import { ErrorMessages, StatusCodes } from '../utils/constants/constants.js';
-export class UserReviewsController {
-  userReviewsService = new UserReviewsService();
+
+export class ReviewsController {
+  constructor(reviewsService) {
+    this.reviewsService = reviewsService;
+  }
 
   // 리뷰 생성
   createReview = async (req, res, next) => {
@@ -26,7 +28,7 @@ export class UserReviewsController {
           .json({ message: ErrorMessages.MISSING_CONTENT });
       }
 
-      const createReviews = await this.userReviewsService.createReview({
+      const createReviews = await this.reviewsService.createReview({
         userId,
         restaurantId,
         orderId,
@@ -38,31 +40,13 @@ export class UserReviewsController {
       next(err);
     }
   };
-  // 주문번호에 따른 내 리뷰조회
-  getAllMyReviewsByOrderId = async (req, res, next) => {
-    try {
-      const userId = req.user.id;
-      const { orderId } = req.params;
-      console.log('----------orderId', orderId);
-      const reviews =
-        await this.userReviewsService.findAllMyReviewsByuserIdAndOrderId(
-          userId,
-          orderId,
-        );
-
-      return res.status(StatusCodes.OK).json({ data: reviews });
-    } catch (err) {
-      next(err);
-    }
-  };
   // 내 전체 리뷰조회
   getAllMyReviews = async (req, res, next) => {
     try {
       const userId = req.user.id;
-      const reviews = await this.userReviewsService.findAllMyReviewsByuserId(
+      const reviews = await this.reviewsService.findAllMyReviewsByuserId(
         userId,
       );
-
       return res.status(StatusCodes.OK).json({ data: reviews });
     } catch (err) {
       next(err);
@@ -75,7 +59,7 @@ export class UserReviewsController {
       const { reviewId } = req.params;
       const { score, content } = req.body;
 
-      const updateReviews = await this.userReviewsService.updateReview(
+      const updateReviews = await this.reviewsService.updateReview(
         userId,
         reviewId,
         score,
@@ -93,12 +77,22 @@ export class UserReviewsController {
       const userId = req.user.id;
       const { reviewId } = req.params;
 
-      const deleteReviews = await this.userReviewsService.deleteReview(
+      const deleteReviews = await this.reviewsService.deleteReview(
         reviewId,
         userId,
       );
 
       return res.status(StatusCodes.OK).json({ message: '삭제되었습니다.' });
+    } catch (err) {
+      next(err);
+    }
+  };
+  // 전체 리뷰 조회
+  getAllReviews = async (req, res, next) => {
+    try {
+      const { restaurantId } = req.params;
+      const reviews = await this.reviewsService.findAllReviews(restaurantId);
+      return res.status(StatusCodes.OK).json({ data: reviews });
     } catch (err) {
       next(err);
     }

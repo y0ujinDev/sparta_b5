@@ -1,10 +1,11 @@
-import { UserReviewsRepository } from '../repositories/user.reviews.repository.js';
-export class UserReviewsService {
-  userReviewsRepository = new UserReviewsRepository();
+export class ReviewsService {
+  constructor(reviewsRepository) {
+    this.reviewsRepository = reviewsRepository;
+  }
 
   // 리뷰 생성
   createReview = async ({ userId, restaurantId, orderId, score, content }) => {
-    const createdReview = await this.userReviewsRepository.createReview({
+    const createdReview = await this.reviewsRepository.createReview({
       userId,
       restaurantId,
       orderId,
@@ -13,29 +14,16 @@ export class UserReviewsService {
     });
 
     return {
-      reviewId: createdReview.reviewId,
+      reviewId: createdReview.id,
       score: createdReview.score,
       content: createdReview.content,
-    };
-  };
-
-  // 주문번호에 따른 내 리뷰조회
-  findAllMyReviewsByuserIdAndOrderId = async (userId, orderId) => {
-    const review =
-      await this.userReviewsRepository.findAllMyReviewsByuserIdAndOrderId(
-        userId,
-        orderId,
-      );
-    return {
-      score: review.score,
-      content: review.content,
-      createdAt: review.createdAt,
-      updatedAt: review.updatedAt,
+      createdAt: createdReview.createdAt,
+      updatedAt: createdReview.updatedAt,
     };
   };
   // 내 전체 리뷰조회
   findAllMyReviewsByuserId = async (userId) => {
-    const reviews = await this.userReviewsRepository.findAllMyReviewsByuserId(
+    const reviews = await this.reviewsRepository.findAllMyReviewsByuserId(
       userId,
     );
     reviews.sort((a, b) => {
@@ -43,6 +31,8 @@ export class UserReviewsService {
     });
     return reviews.map((review) => {
       return {
+        reviewId: review.id,
+        title: review.restaurant.name,
         score: review.score,
         content: review.content,
         createdAt: review.createdAt,
@@ -52,19 +42,12 @@ export class UserReviewsService {
   };
   // 리뷰수정
   updateReview = async (userId, reviewId, score, content) => {
-    const review = await this.userReviewsRepository.findByReviewId(reviewId);
+    const review = await this.reviewsRepository.findByReviewId(reviewId);
     if (!review) throw new Error('리뷰가 존재하지 않습니다.');
-    await this.userReviewsRepository.updateReview(
-      userId,
-      reviewId,
-      score,
-      content,
-    );
-    const updatedReview = await this.userReviewsRepository.findByReviewId(
-      reviewId,
-    );
+    await this.reviewsRepository.updateReview(userId, reviewId, score, content);
+    const updatedReview = await this.reviewsRepository.findByReviewId(reviewId);
     return {
-      reviewId: updatedReview.reviewId,
+      reviewId: updatedReview.id,
       score: updatedReview.score,
       content: updatedReview.content,
       createdAt: updatedReview.createdAt,
@@ -73,15 +56,28 @@ export class UserReviewsService {
   };
   // 리뷰삭제
   deleteReview = async (reviewId, userId) => {
-    const review = await this.userReviewsRepository.findByReviewId(reviewId);
+    const review = await this.reviewsRepository.findByReviewId(reviewId);
     if (!review) throw new Error('리뷰가 존재하지 않습니다.');
-    await this.userReviewsRepository.deleteReview(reviewId, userId);
+    await this.reviewsRepository.deleteReview(reviewId, userId);
     return {
-      reviewId: review.reviewId,
+      reviewId: review.id,
       content: review.content,
       score: review.score,
       createdAt: review.createdAt,
       updatedAt: review.updatedAt,
     };
+  };
+  // 전체 리뷰 조회
+  findAllReviews = async (restaurantId) => {
+    const reviews = await this.reviewsRepository.findAllReviews(restaurantId);
+    return reviews.map((reviews) => {
+      return {
+        nickname: reviews.user.nickname,
+        score: reviews.score,
+        content: reviews.content,
+        createdAt: reviews.createdAt,
+        updatedAt: reviews.updatedAt,
+      };
+    });
   };
 }

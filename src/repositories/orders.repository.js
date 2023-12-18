@@ -37,22 +37,19 @@ export class OrdersRepository {
   };
 
   findOrderByUserId = async (userId) => {
-    return await this.prisma.carts.findMany({
+    return await this.prisma.orders.findMany({
       where: {
         userId: +userId,
-      },
-      include: {
-        cartItems: {
-          include: {
-            menu: true,
-          },
-        },
       },
     });
   };
 
-  findAllOrders = async () => {
-    return await this.prisma.orders.findMany();
+  findAllOrders = async (restaurantId) => {
+    return await this.prisma.orders.findMany({
+      where: {
+        restaurantId: +restaurantId,
+      },
+    });
   };
 
   updateOrder = async ({ orderId, deliveryStatus }) => {

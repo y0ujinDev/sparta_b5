@@ -1,8 +1,9 @@
-import { FindRestaurantsService } from '../services/find.restaurants.service.js';
-import { StatusCodes, ErrorMessages } from '../utils/constants/constants.js';
+import { StatusCodes } from '../utils/constants/constants.js';
 
 export class FindRestaurantsController {
-  findRestaurantsService = new FindRestaurantsService();
+  constructor(findRestaurantsService) {
+    this.findRestaurantsService = findRestaurantsService;
+  }
 
   // 음식점 검색 기능
   getAllRestaurants = async (req, res, next) => {

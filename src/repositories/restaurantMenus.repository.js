@@ -2,10 +2,9 @@ import 'dotenv/config';
 const { S3_BASE_URL } = process.env;
 
 export class RestaurantMenusRepository {
-constructor(prisma){
-  this.prisma = prisma;
-}
-
+  constructor(prisma) {
+    this.prisma = prisma;
+  }
 
   createOne = async ({ restaurantId, name, price, image, content }) => {
     const menu = await this.prisma.menus.create({
@@ -20,8 +19,14 @@ constructor(prisma){
     return { ...menu, image: `${S3_BASE_URL}/${menu.image}` };
   };
 
-  readMany = async ({ sort }) => {
+  readMany = async ({ sort, restaurantId }) => {
+    console.log('restaurantId', restaurantId);
+    console.log('sort', sort);
     const menus = await this.prisma.menus.findMany({
+      where: {
+        restaurantId: +restaurantId,
+      },
+
       include: {
         restaurant: {
           select: {
@@ -38,9 +43,12 @@ constructor(prisma){
       ...menu,
       image: `${S3_BASE_URL}/${menu.image}`, // 이미지 URL 조합
     }));
-
+    console.log('menusWithImages', menusWithImages);
     return menusWithImages;
   };
+
+  
+
 
   updateOneById = async (id, { name, price, image, content }) => {
     const menu = await this.prisma.menus.findUnique({ where: { id } });
