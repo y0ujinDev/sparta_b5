@@ -9,28 +9,35 @@
   </head>
   <body>
     <div class="logo">
-      <img src="../resources/codeeats.png" id="codeeatsLogo" />
+      <img
+        src="../resources/codeeats.png"
+        id="codeeatsLogo"
+        onclick="toHome()"
+      />
     </div>
     <div class="container" id="container">
       <div class="form-container sign-up-container">
-        <form action="#">
+        <form id="signupform" action="#">
           <h1>Create Account</h1>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <input type="password" placeholder="Confirm Password" />
+          <input type="text" placeholder="Nick Name" id="signupNickname" />
+          <input type="email" placeholder="Email" id="signupEmail" />
+          <input type="password" placeholder="Password" id="signupPassword" />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            id="signupConfirmPassword"
+          />
           <label id="ownerLabel"
-            ><input type="checkbox" name="isOwner" value="true" /> Are you
-            Owner?</label
+            ><input type="checkbox" id="isOwner" />Are you Owner?</label
           >
           <button>Sign Up</button>
         </form>
       </div>
       <div class="form-container sign-in-container">
-        <form action="#">
+        <form id="signinform" action="#">
           <h1>Sign in</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="email" placeholder="Email" id="signinEmail" />
+          <input type="password" placeholder="Password" id="signinPassword" />
           <button>Sign In</button>
         </form>
       </div>
