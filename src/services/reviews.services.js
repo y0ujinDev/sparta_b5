@@ -14,9 +14,11 @@ export class ReviewsService {
     });
 
     return {
-      reviewId: createdReview.reviewId,
+      reviewId: createdReview.id,
       score: createdReview.score,
       content: createdReview.content,
+      createdAt: createdReview.createdAt,
+      updatedAt: createdReview.updatedAt,
     };
   };
   // 내 전체 리뷰조회
@@ -29,6 +31,8 @@ export class ReviewsService {
     });
     return reviews.map((review) => {
       return {
+        reviewId: review.id,
+        title: review.restaurant.name,
         score: review.score,
         content: review.content,
         createdAt: review.createdAt,
@@ -43,7 +47,7 @@ export class ReviewsService {
     await this.reviewsRepository.updateReview(userId, reviewId, score, content);
     const updatedReview = await this.reviewsRepository.findByReviewId(reviewId);
     return {
-      reviewId: updatedReview.reviewId,
+      reviewId: updatedReview.id,
       score: updatedReview.score,
       content: updatedReview.content,
       createdAt: updatedReview.createdAt,
@@ -56,7 +60,7 @@ export class ReviewsService {
     if (!review) throw new Error('리뷰가 존재하지 않습니다.');
     await this.reviewsRepository.deleteReview(reviewId, userId);
     return {
-      reviewId: review.reviewId,
+      reviewId: review.id,
       content: review.content,
       score: review.score,
       createdAt: review.createdAt,

@@ -20,6 +20,13 @@ export class ReviewsRepository {
   findAllMyReviewsByuserId = async (userId) => {
     const foundAllMyReviewsByuserId = await this.prisma.reviews.findMany({
       where: { userId },
+      include: {
+        restaurant: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     return foundAllMyReviewsByuserId;
   };
