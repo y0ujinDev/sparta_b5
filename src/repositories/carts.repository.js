@@ -75,13 +75,10 @@ export class CartsRepository {
   };
 
   // 장바구니 비우기
-  clearCart = async ({ userId, restaurantId }) => {
+  clearCart = async ({ cartId }) => {
     return await this.prisma.cartItems.deleteMany({
       where: {
-        cart: {
-          userId,
-          restaurantId: +restaurantId,
-        },
+        cartId: cartId,
       },
     });
   };
